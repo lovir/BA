@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="sales">
+	
+	<!-- 페이징 sql -->
+	<sql id="pagingHeader">
+		SELECT * FROM (
+			SELECT ROW_NUMBER() OVER (ORDER BY seq ASC) AS rn, A.* FROM (
+	</sql>
+	<sql id="pagingFooter">
+			) A
+		) WHERE rn BETWEEN #{start} AND #{end}
+	</sql>
+	
+	<insert id="insertSales">
+        insert into sales (sales_member, pid, purchase_name, purchase_amount, purchase_date, expected_date, upper_member, upper_amount, status, regdate) values
+        (#{sales_member}, #{pid}, #{purchase_name}, #{purchase_amount}, STR_TO_DATE (#{purchase_date}, '%Y %m %d'), STR_TO_DATE (#{expected_date}, '%Y %m %d'),
+        #{upper_member}, #{upper_amount}, #{status}, now())
+    </insert>
+    <update id="updateSales" >
+        update sales set
+         sales_member = #{sales_member}, pid=#{pid}, purchase_name=#{purchase_name}, purchase_amount = #{purchase_amount}, 
+         purchase_date = STR_TO_DATE (#{purchase_date}, '%Y-%m-%d'), expected_date = STR_TO_DATE (#{expected_date}, '%Y-%m-%d'),
+         upper_member = #{upper_member}, upper_amount = #{upper_amount}, status=#{status},
+         updatedate = now()
+        where seq = #{seq}
+    </update>    
+    <delete id="deleteSales">
+        delete from sales where seq = #{seq}
+    </delete>
+    <select id="selectAll" resultType="com.example.spring02.model.sales.dto.SalesVO">
+        select *, (select product_name from product p where s.pid=p.pid) as product_name from sales s
+    </select>
+    <select id="detailView" resultType="com.example.spring02.model.sales.dto.SalesVO">
+		SELECT 
+			 *
+		FROM sales
+		WHERE seq = #{seq} 
+	</select>
+</mapper>

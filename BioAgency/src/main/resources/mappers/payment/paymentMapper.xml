@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="payment">
+	
+	<!-- 페이징 sql -->
+	<sql id="pagingHeader">
+		SELECT * FROM (
+			SELECT ROW_NUMBER() OVER (ORDER BY userid ASC) AS rn, A.* FROM (
+	</sql>
+	<sql id="pagingFooter">
+			) A
+		) WHERE rn BETWEEN #{start} AND #{end}
+	</sql>
+	
+	<insert id="insertPayment">
+        insert into member (name, userid, pwd, phone, upper_member, status, regdate) values
+        (#{userName}, #{userId}, #{userPw}, #{phone}, #{upper_member}, #{status}, now())
+    </insert>
+    <update id="updatePayment" >
+        update member set
+         name = #{userName}, birthdate=#{birthdate}, address = #{address}, account = #{account},
+         contract_sdate = #{contract_sdate}, email = #{userEmail}, phone = #{phone}, status=#{status},
+         updatedate = now()
+        where userid = #{userId}
+    </update>    
+    <delete id="deletePayment">
+        delete from member where userid = #{userid}
+    </delete>
+    <select id="selectAll" resultType="com.example.spring02.model.payment.dto.PaymentVO">
+        select * from payment
+    </select>
+    <select id="detailView" resultType="com.example.spring02.model.payment.dto.PaymentVO">
+		SELECT 
+			name AS userName,
+			userid AS userId,
+			email AS userEmail,
+			regdate AS userRegdate,
+			status,
+			phone,
+			birthdate,
+			address,
+			account,
+			contract_sdate,
+			upper_member
+		FROM member
+		WHERE userid = #{userid} 
+	</select>
+</mapper>

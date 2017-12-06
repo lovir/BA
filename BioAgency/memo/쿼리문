@@ -1,0 +1,104 @@
+CREATE TABLE `member` (
+	`name` VARCHAR(20) NULL DEFAULT NULL,
+	`userid` VARCHAR(50) NOT NULL COMMENT '사용자 ID : email',
+	`pwd` VARCHAR(20) NOT NULL,
+	`email` VARCHAR(50) NULL DEFAULT NULL,
+	`phone` VARCHAR(20) NOT NULL,
+	`admin` VARCHAR(50) NULL DEFAULT NULL,
+	`birthdate` VARCHAR(8) NULL DEFAULT NULL,
+	`address` VARCHAR(100) NULL DEFAULT NULL,
+	`account` VARCHAR(50) NULL DEFAULT NULL,
+	`contract_sdate` VARCHAR(50) NULL DEFAULT NULL COMMENT '계약 시작일',
+	`contract_edate` VARCHAR(50) NULL DEFAULT NULL COMMENT '계약 종료일',
+	`upper_member` VARCHAR(50) NULL DEFAULT NULL COMMENT '상위 회원',
+	`status` VARCHAR(20) NULL DEFAULT NULL COMMENT '회원 상태 : 요청, 회원, 해지, 탈퇴',
+	`regdate` DATETIME NULL DEFAULT NULL,
+	`updatedate` DATETIME NULL DEFAULT NULL,
+	PRIMARY KEY (`userid`)
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+CREATE TABLE `payment` (
+	`seq` INT(11) NOT NULL AUTO_INCREMENT,
+	`amount_date` DATE NULL DEFAULT NULL COMMENT '수당 지급일',
+	`member_id` VARCHAR(50) NULL DEFAULT NULL,
+	`member_name` VARCHAR(50) NULL DEFAULT NULL,
+	`paymemt_amount` INT(11) NULL DEFAULT NULL COMMENT '수당 합계',
+	`account` VARCHAR(50) NULL DEFAULT NULL COMMENT '계좌번호',
+	`status` VARCHAR(10) NULL DEFAULT NULL COMMENT '상태 : 지급완료, 지급전',
+	`regdate` DATETIME NULL DEFAULT NULL,
+	`updatedate` DATETIME NULL DEFAULT NULL,
+	PRIMARY KEY (`seq`)
+)
+COMMENT='수당 지급 내역'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=2
+;
+
+CREATE TABLE `product` (
+	`pid` INT(11) NULL DEFAULT NULL,
+	`product_name` VARCHAR(50) NULL DEFAULT NULL,
+	`product_price` INT(11) NULL DEFAULT NULL,
+	`payment_amount` INT(11) NULL DEFAULT NULL
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+CREATE TABLE `sales` (
+	`seq` INT(11) NOT NULL AUTO_INCREMENT,
+	`sales_member` VARCHAR(50) NULL DEFAULT NULL,
+	`purchase_name` VARCHAR(50) NULL DEFAULT NULL,
+	`pid` INT(11) NULL DEFAULT NULL,
+	`purchase_amount` INT(11) NULL DEFAULT NULL COMMENT '구매금액',
+	`purchase_date` DATE NULL DEFAULT NULL COMMENT '구매일',
+	`expected_date` DATE NULL DEFAULT NULL COMMENT '지급 예상일',
+	`upper_member` VARCHAR(50) NULL DEFAULT NULL COMMENT '상위 회원',
+	`upper_amount` INT(11) NULL DEFAULT NULL COMMENT '상위 후원금액',
+	`status` VARCHAR(20) NULL DEFAULT NULL COMMENT '매출 상태 : 정상, 환불',
+	`regdate` DATETIME NULL DEFAULT NULL,
+	`updatedate` DATETIME NULL DEFAULT NULL,
+	PRIMARY KEY (`seq`)
+)
+COMMENT='매출 내역\r\n'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=9
+;
+
+COMMENT='매출 내역\r\n'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=2
+;
+
+
+INSERT INTO `member` (`name`, `userid`, `pwd`, `email`, `phone`, `admin`, `birthdate`, `address`, `account`, `contract_sdate`, `contract_edate`, `upper_member`, `status`, `regdate`, `updatedate`) VALUES ('홍길동', 'lovir', '11', NULL, '00', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, '관리자', '2017-12-02 00:00:00', NULL);
+INSERT INTO `member` (`name`, `userid`, `pwd`, `email`, `phone`, `admin`, `birthdate`, `address`, `account`, `contract_sdate`, `contract_edate`, `upper_member`, `status`, `regdate`, `updatedate`) VALUES ('11', 'lovir11', '11', '', '11', NULL, '', '', '', '', NULL, NULL, '거절', '2017-12-02 00:00:00', '2017-12-03 13:19:39');
+INSERT INTO `member` (`name`, `userid`, `pwd`, `email`, `phone`, `admin`, `birthdate`, `address`, `account`, `contract_sdate`, `contract_edate`, `upper_member`, `status`, `regdate`, `updatedate`) VALUES ('황금복', 'lovir12', '11', '', '1234', NULL, '', '', '', '', NULL, NULL, '회원', '2017-12-02 00:00:00', '2017-12-03 13:19:31');
+INSERT INTO `member` (`name`, `userid`, `pwd`, `email`, `phone`, `admin`, `birthdate`, `address`, `account`, `contract_sdate`, `contract_edate`, `upper_member`, `status`, `regdate`, `updatedate`) VALUES (' 김금복', 'lovir3', '11', '123', '123', NULL, '1234', '1111', '1234', '2017-12-01', NULL, NULL, '회원', '2017-12-01 00:00:00', '2017-12-03 11:56:55');
+INSERT INTO `member` (`name`, `userid`, `pwd`, `email`, `phone`, `admin`, `birthdate`, `address`, `account`, `contract_sdate`, `contract_edate`, `upper_member`, `status`, `regdate`, `updatedate`) VALUES ('홍말자', 'lovir4', '11', 'lovir99@naver.com', '01085609702', NULL, '19770707', '1', '2', '2017.01.01', NULL, NULL, '회원', '2017-12-02 00:00:00', '2017-12-03 13:20:25');
+INSERT INTO `member` (`name`, `userid`, `pwd`, `email`, `phone`, `admin`, `birthdate`, `address`, `account`, `contract_sdate`, `contract_edate`, `upper_member`, `status`, `regdate`, `updatedate`) VALUES ('황성호', 'lovir5', '11', '', '22', NULL, '', '', '', '', NULL, NULL, '회원', '2017-12-02 00:00:00', '2017-12-03 14:17:14');
+INSERT INTO `member` (`name`, `userid`, `pwd`, `email`, `phone`, `admin`, `birthdate`, `address`, `account`, `contract_sdate`, `contract_edate`, `upper_member`, `status`, `regdate`, `updatedate`) VALUES ('프리', 'lovir9', '11', '', '123', NULL, '19770707', '', '', '20171201', NULL, NULL, '회원', '2017-12-02 00:00:00', '2017-12-03 14:17:04');
+INSERT INTO `member` (`name`, `userid`, `pwd`, `email`, `phone`, `admin`, `birthdate`, `address`, `account`, `contract_sdate`, `contract_edate`, `upper_member`, `status`, `regdate`, `updatedate`) VALUES ('김기리', 'lovir99@gmail.com', '11', NULL, '01085609702', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '회원', '2017-12-02 00:00:00', NULL);
+
+
+INSERT INTO `product` (`pid`, `product_name`, `product_price`, `payment_amount`) VALUES (1, '가입금', 3000000, 700000);
+INSERT INTO `product` (`pid`, `product_name`, `product_price`, `payment_amount`) VALUES (6, '기타', 0, 0);
+INSERT INTO `product` (`pid`, `product_name`, `product_price`, `payment_amount`) VALUES (2, '바이오가드', 1500000, 400000);
+INSERT INTO `product` (`pid`, `product_name`, `product_price`, `payment_amount`) VALUES (5, '코로로', 20000, 10000);
+INSERT INTO `product` (`pid`, `product_name`, `product_price`, `payment_amount`) VALUES (4, '코클링', 49000, 18000);
+INSERT INTO `product` (`pid`, `product_name`, `product_price`, `payment_amount`) VALUES (3, '힐링타임', 198000, 60000);
+
+INSERT INTO `sales` (`seq`, `sales_member`, `purchase_name`, `pid`, `purchase_amount`, `purchase_date`, `expected_date`, `upper_member`, `upper_amount`, `status`, `regdate`, `updatedate`) VALUES (2, '', '홍말자', 1, 3000000, '2017-12-02', NULL, '', 0, '환불', '2017-12-05 18:18:25', '2017-12-05 20:58:04');
+INSERT INTO `sales` (`seq`, `sales_member`, `purchase_name`, `pid`, `purchase_amount`, `purchase_date`, `expected_date`, `upper_member`, `upper_amount`, `status`, `regdate`, `updatedate`) VALUES (3, '', '홍말자', 2, 1000000, '2017-12-03', NULL, '', 0, '', NULL, '2017-12-05 20:18:07');
+INSERT INTO `sales` (`seq`, `sales_member`, `purchase_name`, `pid`, `purchase_amount`, `purchase_date`, `expected_date`, `upper_member`, `upper_amount`, `status`, `regdate`, `updatedate`) VALUES (4, NULL, '홍말자', 1, NULL, '2017-12-01', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sales` (`seq`, `sales_member`, `purchase_name`, `pid`, `purchase_amount`, `purchase_date`, `expected_date`, `upper_member`, `upper_amount`, `status`, `regdate`, `updatedate`) VALUES (5, '', '홍말자', 3, 0, '2017-12-05', '0000-00-00', '', 0, '환불', NULL, '2017-12-05 21:03:16');
+INSERT INTO `sales` (`seq`, `sales_member`, `purchase_name`, `pid`, `purchase_amount`, `purchase_date`, `expected_date`, `upper_member`, `upper_amount`, `status`, `regdate`, `updatedate`) VALUES (6, '1', '홍길동', 1, 1500000, '2017-12-05', NULL, '1', 0, '구매', '2017-12-05 19:33:42', NULL);
+INSERT INTO `sales` (`seq`, `sales_member`, `purchase_name`, `pid`, `purchase_amount`, `purchase_date`, `expected_date`, `upper_member`, `upper_amount`, `status`, `regdate`, `updatedate`) VALUES (7, '123', '금자씨', 2, 3000000, '2017-12-05', NULL, '123', 0, '구매', '2017-12-05 19:41:05', NULL);
+INSERT INTO `sales` (`seq`, `sales_member`, `purchase_name`, `pid`, `purchase_amount`, `purchase_date`, `expected_date`, `upper_member`, `upper_amount`, `status`, `regdate`, `updatedate`) VALUES (8, '123', '금자씨', 3, 3000000, '2017-12-05', NULL, '123', 0, '구매', '2017-12-05 19:42:28', NULL);
+
+
