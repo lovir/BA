@@ -1,26 +1,32 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>게시글 목록</title>
+<title>회원 정보 보기</title>
 <%@ include file="../include/header.jsp" %>
-<script>
-	$(document).ready(function(){
-		$("#btnWrite").click(function(){
-			// 페이지 주소 변경(이동)
-			location.href = "${path}/board/write.do";
-		});
-	});
-	// 원하는 페이지로 이동시 검색조건, 키워드 값을 유지하기 위해 
-	function list(page){
-		location.href="${path}/board/list.do?curPage="+page+"&searchOption-${map.searchOption}"+"&keyword=${map.keyword}";
-	}
-</script>
 </head>
+
 <body>
+
 <%@ include file="../include/menu.jsp" %>
-	<h2>게시글 목록</h2>
+
+<div class="container-fluid text-center">    
+  <div class="row content">
+    <div class="col-sm-2 sidenav">
+      <p><a href="#">Link</a></p>
+      <p><a href="#">Link</a></p>
+      <p><a href="#">Link</a></p>
+    </div>
+    <div class="col-sm-8 text-left"> 
+<p>				
+<h1  style="text-align: center">
+	<small>공지 사항</small>
+</h1>				
+</p>
+
+<p>
 	<form name="form1" method="post" action="${path}/board/list.do">
 		<select name="searchOption">
 			<!-- 검색조건을 검색처리후 결과화면에 보여주기위해  c:out 출력태그 사용, 삼항연산자 -->
@@ -130,5 +136,27 @@
 		</tr>
 		<!-- 페이징 -->
 </table>
+</p>
+	<p style="text-align: right">
+	<button type="button" class="btn" onClick="location.href='insertForm.do'">매출 등록</button>
+	</p>
+	
+		
+	</div>
+    <div class="col-sm-2 sidenav">
+      <div class="well">
+        <p>ADS</p>
+      </div>
+      <div class="well">
+        <p>ADS</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="container-fluid text-center">
+  <p>Footer Text</p>
+</footer>
+
 </body>
 </html>

@@ -69,11 +69,20 @@ ENGINE=InnoDB
 AUTO_INCREMENT=9
 ;
 
-COMMENT='매출 내역\r\n'
-COLLATE='utf8_general_ci'
+CREATE TABLE `tbl_board` (
+	`bno` INT(11) NULL DEFAULT NULL,
+	`title` VARCHAR(50) NULL DEFAULT NULL,
+	`content` TEXT NULL DEFAULT NULL,
+	`regdate` DATETIME NULL DEFAULT NULL,
+	`writer` VARCHAR(50) NULL DEFAULT NULL,
+	`viewcnt` INT(11) NULL DEFAULT NULL,
+	`user_name` VARCHAR(50) NULL DEFAULT NULL,
+	`show` CHAR(1) NULL DEFAULT NULL
+)
+COMMENT='공지사항'
 ENGINE=InnoDB
-AUTO_INCREMENT=2
 ;
+
 
 
 INSERT INTO `member` (`name`, `userid`, `pwd`, `email`, `phone`, `admin`, `birthdate`, `address`, `account`, `contract_sdate`, `contract_edate`, `upper_member`, `status`, `regdate`, `updatedate`) VALUES ('홍길동', 'lovir', '11', NULL, '00', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, '관리자', '2017-12-02 00:00:00', NULL);
