@@ -28,7 +28,7 @@
 
 <p>
 	<form name="form1" method="post" action="${path}/board/list.do">
-		<select name="searchOption">
+		<%-- <select name="searchOption">
 			<!-- 검색조건을 검색처리후 결과화면에 보여주기위해  c:out 출력태그 사용, 삼항연산자 -->
 			<option value="all" <c:out value="${map.searchOption == 'all'?'selected':''}"/> >제목+이름+제목</option>
 			<option value="user_name" <c:out value="${map.searchOption == 'user_name'?'selected':''}"/> >이름</option>
@@ -36,15 +36,12 @@
 			<option value="title" <c:out value="${map.searchOption == 'title'?'selected':''}"/> >제목</option>
 		</select>
 		<input name="keyword" value="${map.keyword}">
-		<input type="submit" value="조회">
+		<input type="submit" value="조회"> --%>
 	<!-- 로그인한 사용자만 글쓰기 버튼을 활성화 -->
-	<c:if test="${sessionScope.userId != null}">
-		<button type="button" id="btnWrite">글쓰기</button>
-	</c:if>
 	</form>
 	<!-- 레코드의 갯수를 출력 -->
 	${map.count}개의 게시물이 있습니다.
-	<table border="1" width="600px">
+	<table class="table">
 		<tr>
 			<th>번호</th>
 			<th>제목</th>
@@ -55,7 +52,7 @@
 	
 	<c:forEach var="row" items="${map.list}">
 		<c:choose>
-			<c:when test="${row.show == 'y'}">
+			<c:when test="${row.showYN == 'Y'}">
 		<!-- show 컬럼이 y일때(삭제X 글) -->
 		<tr>
 			<td>${row.bno}</td>
@@ -69,7 +66,7 @@
 					</c:if>
 				</a>
 			</td>
-			<td>${row.userName}</td>
+			<td>관리자</td>
 			<td>
 				<!-- 원하는 날짜형식으로 출력하기 위해 fmt태그 사용 -->
 				<fmt:formatDate value="${row.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/>
@@ -137,10 +134,11 @@
 		<!-- 페이징 -->
 </table>
 </p>
+	<c:if test="${sessionScope.userId == 'admin'}">
 	<p style="text-align: right">
-	<button type="button" class="btn" onClick="location.href='insertForm.do'">매출 등록</button>
+	<button type="button" class="btn" id="btnWrite" onClick="location.href='write.do'">글쓰기</button>
 	</p>
-	
+	</c:if>
 		
 	</div>
     <div class="col-sm-2 sidenav">

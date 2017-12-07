@@ -82,7 +82,8 @@ public class BoardController {
 	@RequestMapping(value="insert.do", method=RequestMethod.POST)
 	public String insert(@ModelAttribute BoardVO vo, HttpSession session) throws Exception{
 		// session에 저장된 userId를 writer에 저장
-		String writer = (String) session.getAttribute("userId");
+		//String writer = (String) session.getAttribute("userId");
+		String writer = "admin";
 		// vo에 writer를 세팅
 		vo.setWriter(writer);
 		boardService.create(vo);
@@ -103,7 +104,7 @@ public class BoardController {
 		mav.setViewName("board/view");
 		// 뷰에 전달할 데이터
 		// 댓글의 수 : 댓글이 존재하는 게시물의 삭제처리 방지하기 위해
-		mav.addObject("count", replyService.count(bno)); 
+		//mav.addObject("count", replyService.count(bno)); 
 		mav.addObject("dto", boardService.read(bno));
 		mav.addObject("curPage", curPage);
 		mav.addObject("searchOption", searchOption);
