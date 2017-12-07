@@ -1,11 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>게시글 작성</title>
+<title>공지사항 글 쓰기</title>
 <%@ include file="../include/header.jsp" %>
-<%-- <%@ include file="../include/sessionCheck.jsp" %> --%>
+
 <script type="text/javascript" src="${path}/include/js/common.js"></script>
 <script>
 	
@@ -93,32 +94,67 @@
 
 </style>
 </head>
+
 <body>
+
 <%@ include file="../include/menu.jsp" %>
-<h2>게시글 작성</h2>
+
+<div class="container-fluid text-center">    
+  <div class="row content">
+    <div class="col-sm-2 sidenav">
+      <p><a href="#">Link</a></p>
+      <p><a href="#">Link</a></p>
+      <p><a href="#">Link</a></p>
+    </div>
+    <div class="col-sm-8 text-left"> 
+<p>				
+<h1  style="text-align: center">
+	<small>공지 사항 글쓰기</small>
+</h1>				
+</p>
+
+<p>
 <form name="form1" id="form1" method="post" action="${path}/board/insert.do">
-	<div>
-		제목
-		<input name="title" id="title" size="80" placeholder="제목을 입력해주세요">
+	<div class="form-group">
+	<label for="name">제목</label>		
+		<input class="form-control" name="title" id="title" placeholder="제목을 입력해주세요">
 	</div>
-	<div>
-		내용
-		<textarea name="content" id="content" rows="4" cols="80" placeholder="내용을 입력해주세요"></textarea>
+	<div class="form-group">
+	<label for="name">내용</label>		
+		<textarea class="form-control" name="content" id="content" rows="4" placeholder="내용을 입력해주세요"></textarea>
 	</div>
-	<div>
+	<!-- <div>
 		첨부파일 등록
 		<div class="fileDrop"></div>
-		<!-- 첨부파일 목록 -->		
+		첨부파일 목록		
 		<div id="uploadedList"></div>
-	</div>
+	</div> -->
 	<!-- <div>
 		이름
 		<input name="writer" id="writer" placeholder="이름을 입력해주세요">
 	</div> -->
 	<div style="width:650px; text-align: center;">
-		<button type="button" id="btnSave">확인</button>
-		<button type="reset">취소</button>
+		<button class="btn btn-primary" type="button" id="btnSave">확인</button>
+		<button class="btn btn-default" type="reset">취소</button>
 	</div>
 </form>
+</p>
+		
+	</div>
+    <div class="col-sm-2 sidenav">
+      <div class="well">
+        <p>ADS</p>
+      </div>
+      <div class="well">
+        <p>ADS</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="container-fluid text-center">
+  <p>Footer Text</p>
+</footer>
+
 </body>
 </html>

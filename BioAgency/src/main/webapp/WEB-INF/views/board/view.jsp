@@ -309,9 +309,24 @@
 </head>
 <body>
 <%@ include file="../include/menu.jsp" %>
-	<h2>게시글 보기</h2>
+
+<div class="container-fluid text-center">    
+  <div class="row content">
+    <div class="col-sm-2 sidenav">
+      <p><a href="#">Link</a></p>
+      <p><a href="#">Link</a></p>
+      <p><a href="#">Link</a></p>
+    </div>
+    <div class="col-sm-8 text-left"> 
+<p>				
+<h1  style="text-align: center">
+	<small>공지 사항 글 보기</small>
+</h1>				
+</p>
+
+<p>
 	<c:choose>
-		<c:when test="${dto.show == 'y'}">
+		<c:when test="${dto.showYN == 'Y'}">
 		<!-- show가 y면 -->	
 			<!-- 게시물 상세보기 영역 -->
 			<form name="form1" id="form1" method="post">
@@ -348,7 +363,7 @@
 					<!-- 게시물번호를 hidden으로 처리 -->
 					<input type="hidden" name="bno" value="${dto.bno}">
 				<!-- 본인이 쓴 게시물만 수정, 삭제가 가능하도록 처리 -->
-				<c:if test="${sessionScope.userId == dto.writer}">
+				<c:if test="${sessionScope.userId == 'admin'}">
 					<button type="button" id="btnUpdete">수정</button>
 					<button type="button" id="btnDelete">삭제</button>
 				</c:if>
@@ -359,17 +374,15 @@
 			<!-- 게시물 상세보기 영역 -->
 			
 			<!-- 댓글 작성 영역 -->	
-			<div style="width:650px; text-align: center;">
+			<!-- <div style="width:650px; text-align: center;">
 				<br>
-				<!-- 로그인 한 회원에게만 댓글 작성폼이 보이게 처리 -->
 				<c:if test="${sessionScope.userId != null}">	
 					<textarea rows="5" cols="80" id="replytext" placeholder="댓글을 작성해주세요"></textarea>
 					<br>
-					<!-- 비밀댓글 체크박스 -->
 					<input type="checkbox" id="secretReply">비밀 댓글
 					<button type="button" id="btnReply">댓글 작성</button>
 				</c:if>
-			</div>
+			</div> -->
 			<!-- 댓글 작성 영역 -->
 		
 		</c:when>
@@ -378,8 +391,23 @@
 			삭제된 게시글 입니다.
 		</c:otherwise>
 	</c:choose>
-	<!-- 댓글 목록 영역 -->
-	<div id="listReply"></div>
-	<!-- 댓글 목록 영역 -->
+	</p>
+		
+	</div>
+    <div class="col-sm-2 sidenav">
+      <div class="well">
+        <p>ADS</p>
+      </div>
+      <div class="well">
+        <p>ADS</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="container-fluid text-center">
+  <p>Footer Text</p>
+</footer>
+
 </body>
 </html>

@@ -22,11 +22,13 @@
 		<!-- 페이징 -->
 		<include refid="pagingHeader"></include>
 			SELECT 
-				ROWNUM, bno, title, content, b.regdate, viewcnt, user_name AS userName, show, 
+				@ROWNUM := @ROWNUM + 1 AS ROWNUM, 
+				bno, title, content, regdate, viewcnt, user_name AS userName, showYN
 				<!-- **댓글숫자표시 -->
-				(SELECT COUNT(*) FROM tbl_reply WHERE bno=b.bno) AS recnt
+				<!-- (SELECT COUNT(*) FROM tbl_reply WHERE bno=b.bno) AS recnt -->
+				<!-- 0 AS recnt -->
 			FROM 
-				tbl_board b, tbl_member m
+				tbl_board b, (SELECT @ROWNUM := 0) R
 			<!-- 검색조건 -->
 			<include refid="search"></include>
 			ORDER BY bno DESC, b.regdate DESC 
@@ -38,7 +40,7 @@
 	<select id="countArticle" resultType="int">
 		SELECT COUNT(*) 
 		FROM 
-			tbl_board b, tbl_member m
+			tbl_board b
 		<!-- WHERE절을 include 태그로 삽입 -->
 		<include refid="search"></include>
 	</select>
@@ -46,28 +48,28 @@
 	<!-- 02_01. 게시글 작성 -->
 	<insert id="insert">
 		<!-- 게시글 번호를 시퀀스로 생성 -->
-		INSERT INTO tbl_board (
-		  bno, title, content, writer, show
+		<!-- INSERT INTO tbl_board (
+		  bno, title, content, writer, showYN
 		) VALUES (
 		  seq_board.NEXTVAL, #{title}, #{content}, #{writer}, 'y'
-		)
-		<!-- 게시글 번호를 서브쿼리로 생성 -->
-		<!-- INSERT INTO tbl_board (
-		  bno, title, content, writer, show
-		) VALUES (
-		  (SELECT NVL(MAX(bno)+1, 1)FROM tbl_board), #{title}, #{content}, #{writer}, 'y'
 		) -->
+		<!-- 게시글 번호를 서브쿼리로 생성 -->
+		INSERT INTO tbl_board (
+		  title, content, writer, showYN, regdate, viewcnt, user_name
+		) VALUES (
+		  #{title}, #{content}, #{writer}, 'Y', now(), 0, '관리자'
+		)
 	</insert>
 	
 	<!--03. 게시글 상세보기 조회 -->
 	<select id="view" resultType="com.example.spring02.model.board.dto.BoardVO">
 		<!-- SELECT * FROM tbl_board  -->
 		SELECT 
-			bno, title, content, b.regdate, writer, viewcnt, user_name AS userName, show
+			bno, title, content, b.regdate, writer, viewcnt, user_name AS userName, showYN
 		FROM 
-			tbl_board b, tbl_member m
+			tbl_board b
 		WHERE 
-			b.writer = m.user_id 
+			b.writer = 'admin' 
 		AND 
 			bno = #{bno}
 	</select>
@@ -100,7 +102,7 @@
 		UPDATE 
 			tbl_board
 		SET 
-			show = 'n'
+			showYN = 'N'
 		WHERE 
 			bno = #{bno}
 	</update>
@@ -116,32 +118,32 @@
 			<!-- 검색옵션이 전체 검색일 경우 -->
 			<when test="searchOption == 'all'">
 				WHERE 
-					b.writer = m.user_id
+					b.writer = 'admin'
 				AND	
-					(user_name like '%'||#{keyword}||'%'
+					(user_name like CONCAT('%',#{keyword},'%')
 				OR 
-					content like '%'||#{keyword}||'%'
+					content like CONCAT('%',#{keyword},'%')
 				OR 
-					title like '%'||#{keyword}||'%')
+					title like CONCAT('%',#{keyword},'%'))
 			</when>
 			<!-- 전체 검색이 아닐 경우 -->
 			<otherwise>
 				WHERE 
-					b.writer = m.user_id 
+					b.writer = 'admin'
 				AND 
-					${searchOption} like '%'||#{keyword}||'%'
+					${searchOption} like CONCAT('%',#{keyword},'%')
 			</otherwise>
 		</choose>
 	</sql>
 	
 	<!-- 페이징 sql -->
 	<sql id="pagingHeader">
-		SELECT * FROM (
-			SELECT ROWNUM AS rn, A.* FROM (
+		SELECT b.* FROM (
+			select A.ROWNUM rn, A.* FROM (
 	</sql>
 	<sql id="pagingFooter">
 			) A
-		) WHERE rn BETWEEN #{start} AND #{end}
+		) b WHERE rn BETWEEN #{start} AND #{end}
 	</sql>
 	
 	
