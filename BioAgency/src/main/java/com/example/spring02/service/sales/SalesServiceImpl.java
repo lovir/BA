@@ -40,11 +40,13 @@ public class SalesServiceImpl implements SalesService {
 		public void update(SalesVO vo) {
 			// TODO Auto-generated method stub
 			salesDao.updateSales(vo);
+			salesDao.updatePayment(vo);
 		}
 
 		@Override
 		public void insert(SalesVO vo) {
 			// TODO Auto-generated method stub
 			salesDao.insertSales(vo);
+			salesDao.insertPayment(vo);
 		}
 }

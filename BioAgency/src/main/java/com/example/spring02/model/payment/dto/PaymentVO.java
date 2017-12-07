@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class PaymentVO {
 	private int seq;
+	private int salse_seq;
 	private Date amount_date;
 	private String member_id;
 	private String member_name;
@@ -66,6 +67,12 @@ public class PaymentVO {
 	}
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
+	}
+	public int getSalse_seq() {
+		return salse_seq;
+	}
+	public void setSalse_seq(int salse_seq) {
+		this.salse_seq = salse_seq;
 	}
 
 }

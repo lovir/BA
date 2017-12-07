@@ -17,18 +17,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</sql>
 	
 	<insert id="insertSales">
-        insert into sales (sales_member, pid, purchase_name, purchase_amount, purchase_date, expected_date, upper_member, upper_amount, status, regdate) values
-        (#{sales_member}, #{pid}, #{purchase_name}, #{purchase_amount}, STR_TO_DATE (#{purchase_date}, '%Y %m %d'), STR_TO_DATE (#{expected_date}, '%Y %m %d'),
-        #{upper_member}, #{upper_amount}, #{status}, now())
+        insert into sales (sales_member, pid, purchase_name, purchase_amount, purchase_date, expected_date, upper_member, payment_amount, status, regdate) values
+        (#{sales_member}, #{pid}, #{purchase_name}, (select product_price from product where pid=#{pid}), STR_TO_DATE (#{purchase_date}, '%Y %m %d'), STR_TO_DATE (#{expected_date}, '%Y-%m-%d'),
+        #{upper_member}, (select payment_amount from product where pid=#{pid}), #{status}, now())
     </insert>
     <update id="updateSales" >
         update sales set
-         sales_member = #{sales_member}, pid=#{pid}, purchase_name=#{purchase_name}, purchase_amount = #{purchase_amount}, 
+         sales_member = #{sales_member}, pid=#{pid}, purchase_name=#{purchase_name}, purchase_amount = (select product_price from product where pid=#{pid}), 
          purchase_date = STR_TO_DATE (#{purchase_date}, '%Y-%m-%d'), expected_date = STR_TO_DATE (#{expected_date}, '%Y-%m-%d'),
-         upper_member = #{upper_member}, upper_amount = #{upper_amount}, status=#{status},
+         upper_member = #{upper_member}, payment_amount = (select payment_amount from product where pid=#{pid}), status=#{status},
          updatedate = now()
         where seq = #{seq}
-    </update>    
+    </update>
+    <insert id="insertPayment">
+        insert into payment (sales_seq, amount_date, member_id, payment_amount, status, regdate) values
+        ((select max(seq) from sales), STR_TO_DATE (#{expected_date}, '%Y-%m-%d'), #{upper_member}, (select payment_amount * 0.2 from product where pid=#{pid}), #{status}, now())
+    </insert>
+    <update id="updatePayment" >
+        update payment set
+         amount_date=STR_TO_DATE (#{expected_date}, '%Y-%m-%d'), member_id = #{upper_member}, 
+         payment_amount = (select payment_amount * 0.2 from product where pid=#{pid}), status=#{status}, updatedate = now()
+        where sales_seq = #{seq}
+    </update>
     <delete id="deleteSales">
         delete from sales where seq = #{seq}
     </delete>

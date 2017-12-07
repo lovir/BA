@@ -11,10 +11,10 @@ $(document).ready(function(){
 	
 	// 1.  등록
 	$("#btnRegist").click(function(){
-		var purchase_amount = $("#purchase_amount").val();
-		if(purchase_amount == ""){
-			alert("구매금액 입력하세요");
-			document.form1.purchase_amount.focus();
+		var sales_member = $("#sales_member").val();
+		if(sales_member == ""){
+			alert("회원 ID를 입력하세요");
+			document.form1.sales_member.focus();
 			return;
 		}
 		document.form1.action="insert.do";
@@ -49,17 +49,19 @@ $(document).ready(function(){
 	</div>
 	<div class="form-group">
 	<label for="sel1">상품명 </label>
-	 <select class="form-control" id="pid">
+	 <select class="form-control" id="pid" name="pid">
 	   <option value="1">가입금</option>
 	   <option value="2">바이오가드</option>
 	   <option value="3">힐링타임</option>
 	   <option value="4">코클링</option>
+	   <option value="5">코로로</option>
+	   <option value="6">기타</option>
 	 </select>
 	</div>
-	<div class="form-group">
+	<!-- <div class="form-group">
 	<label for="name">구매 금액(원)</label>
 	<input type="text" class="form-control" id="purchase_amount" name="purchase_amount">
-	</div>
+	</div> -->
 	<div class="form-group">
 	<label for="name">구매일</label>
 	<input type="datetime" class="form-control" id="purchase_date" name="purchase_date">
@@ -75,8 +77,7 @@ $(document).ready(function(){
 	<input type="text" class="form-control" id="upper_member" name="upper_member">
 	</div>
 </form>     
-<p  style="text-align: right">>    <button type="button" class="btn btn-primary" id="btnRegist">매출 등록</button> </p>							
-
+<p  style="text-align: right">    <button type="button" class="btn btn-primary" id="btnRegist">매출 등록</button> </p>							
 
 	</div>
     <div class="col-sm-2 sidenav">

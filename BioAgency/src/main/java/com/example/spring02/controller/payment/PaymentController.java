@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.spring02.model.payment.dto.PaymentVO;
+import com.example.spring02.model.sales.dto.SalesVO;
 import com.example.spring02.service.payment.PaymentService;
 
 
@@ -67,4 +68,11 @@ public class PaymentController {
 		paymentService.update(vo);
 		return "redirect:list.do";
 	}
+	
+	//05. 수당  등록 처리
+	/*@RequestMapping("insert.do")
+	public String insert(@ModelAttribute PaymentVO vo) throws Exception{
+		paymentService.insert(vo);
+		return "redirect:list.do";
+	}*/
 }

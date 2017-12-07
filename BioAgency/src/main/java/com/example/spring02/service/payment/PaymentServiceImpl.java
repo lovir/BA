@@ -20,7 +20,6 @@ public class PaymentServiceImpl implements PaymentService {
 		// 01. 리스트 보기
 		@Override
 		public List<PaymentVO> list(HttpSession session) {
-
 			
 			return paymentDao.selectAll();
 

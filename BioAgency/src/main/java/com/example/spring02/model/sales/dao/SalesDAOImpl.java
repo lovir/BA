@@ -30,6 +30,15 @@ public class SalesDAOImpl implements SalesDAO {
 	}
 	public void updateSales(SalesVO vo) {
 		sqlSession.update("sales.updateSales", vo);
-
+	}
+	@Override
+	public void insertPayment(SalesVO vo) {
+		// TODO Auto-generated method stub
+		sqlSession.insert("sales.insertPayment", vo);
+	}
+	@Override
+	public void updatePayment(SalesVO vo) {
+		// TODO Auto-generated method stub
+		sqlSession.update("sales.updatePayment", vo);
 	}
 }

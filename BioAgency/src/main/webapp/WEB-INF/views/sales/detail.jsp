@@ -11,12 +11,12 @@ $(document).ready(function(){
 	
 	// 1.  수정
 	$("#btnUpdete").click(function(){
-		var purchase_amount = $("#purchase_amount").val();
+		/* var purchase_amount = $("#purchase_amount").val();
 		if(purchase_amount == ""){
 			alert("구매금액 입력하세요");
 			document.form1.purchase_amount.focus();
 			return;
-		}
+		} */
 		document.form1.action="update.do";
 		document.form1.submit();
 	});
@@ -50,7 +50,7 @@ $(document).ready(function(){
       <p><a href="#">Link</a></p>
     </div>
     <div class="col-sm-8 text-left"> 
-<h1  style="text-align: center">>
+<h1  style="text-align: center">
 	<small>매출 상세 보기</small>
 </h1>				
 
@@ -71,10 +71,10 @@ $(document).ready(function(){
 	   <option value="4" <c:choose><c:when test="${dto.pid == '4'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>코클링</option>
 	 </select>
 	</div>
-	<div class="form-group">
+	<!-- <div class="form-group">
 	<label for="name">구매 금액(원)</label>
 	<input type="text" class="form-control" id="purchase_amount" name="purchase_amount" value="${dto.purchase_amount}">
-	</div>
+	</div> -->
 	<div class="form-group row">
 	  <div class="col-xs-6">
 	    <label for="purchase_date">구매일</label>

@@ -11,4 +11,6 @@ public interface SalesDAO {
 	public SalesVO detailView(int seq);
 	public void deleteSales(int seq);
 	public void updateSales(SalesVO vo);
+	public void insertPayment(SalesVO vo);
+	public void updatePayment(SalesVO vo);
 }
