@@ -68,10 +68,16 @@ $(document).ready(function(){
 	<label for="name">지급 예상일</label>
 	<input type="datetime" class="form-control" id="expected_date" name="expected_date">
 	</div>
-	<div class="form-group">
-	<label for="name">회원 찾기</label>
-	<input type="text" class="form-control" id="sales_member" name="sales_member">	<button type="button" class="btn" id="btnIDSearch">검색</button>
-	</div>
+	<div class="form-group row">
+		<div class="col-xs-8">
+			<label for="name">회원</label>
+			<input type="text" class="form-control" id="sales_member" name="sales_member">
+		</div>
+		<div class="col-xs-4">	
+			<label for="name">찾기</label>
+			<input type="button" class="btn" id="btnIDSearch" value="검색">
+		</div>
+	</div>	
 	<div class="form-group">
 	<label for="name">1차 후원자</label>
 	<input type="text" class="form-control" id="upper_member" name="upper_member">

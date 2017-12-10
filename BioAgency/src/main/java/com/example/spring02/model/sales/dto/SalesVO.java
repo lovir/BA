@@ -1,5 +1,5 @@
 package com.example.spring02.model.sales.dto;
-
+ 
 import java.sql.Date;
 
 public class SalesVO {

@@ -1,5 +1,5 @@
 package com.example.spring02.model.shop.dto;
-
+ 
 public class CartVO {
 	private int cartId; 		// 장바구니 번호
 	private String userId; 		// 사용자 아이디

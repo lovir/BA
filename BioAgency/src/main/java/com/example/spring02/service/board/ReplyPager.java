@@ -1,5 +1,5 @@
 package com.example.spring02.service.board;
-
+ 
 public class ReplyPager {
 	// 페이지당 게시물 수
 	public static final int PAGE_SCALE = 5;

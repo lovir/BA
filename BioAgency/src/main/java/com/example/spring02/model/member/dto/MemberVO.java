@@ -1,5 +1,5 @@
 package com.example.spring02.model.member.dto;
-
+ 
 import java.sql.Date;
 
 public class MemberVO {
@@ -11,11 +11,13 @@ public class MemberVO {
 	private Date userUpdatedate;
 	private String phone;
 	private String upper_member;
+	private String upper_member_name;
 	private String status;
 	private String birthdate;
 	private String address;
 	private String account;
 	private String contract_sdate;
+	private int sub_member_cnt;
 	
 	public String getUserId() {
 		return userId;
@@ -99,6 +101,18 @@ public class MemberVO {
 	}
 	public void setContract_sdate(String contract_sdate) {
 		this.contract_sdate = contract_sdate;
+	}
+	public String getUpper_member_name() {
+		return upper_member_name;
+	}
+	public void setUpper_member_name(String upper_member_name) {
+		this.upper_member_name = upper_member_name;
+	}
+	public int getSub_member_cnt() {
+		return sub_member_cnt;
+	}
+	public void setSub_member_cnt(int sub_member_cnt) {
+		this.sub_member_cnt = sub_member_cnt;
 	}
 	
 }

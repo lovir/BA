@@ -30,7 +30,7 @@
 	    <c:forEach var="payment" items="${map.list}">
 	    <tr>
 				<td>${payment.member_name}</td>
-	        	<td><a href="#" onclick="location.href='detail.do?userid=${payment.seq}'">${payment.seq}</a></td>
+	        	<td><a href="#" onclick="location.href='detail.do?seq=${payment.seq}'">${payment.seq}</a></td>
 	        	<td>${payment.payment_amount}</td>
 	        	<td>${payment.amount_date}</td>
 	        	<td>${payment.amount_date}</td>

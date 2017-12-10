@@ -23,8 +23,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			address,
 			account,
 			contract_sdate,
-			upper_member
-		FROM member
+			upper_member,
+			(select name from member a where a.userid = m.upper_member) as upper_member_name,
+			(select count(userid) from member a where a.upper_member = m.userid) as sub_member_cnt
+		FROM member m
 		WHERE userid = #{userId} 
 	</select>
 	<!-- 페이징 sql -->
@@ -43,7 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
     <update id="updateMember" >
         update member set
-         name = #{userName}, birthdate=#{birthdate}, address = #{address}, account = #{account},
+         name = #{userName}, birthdate=#{birthdate}, address = #{address}, account = #{account}, upper_member = #{upper_member},
          contract_sdate = #{contract_sdate}, email = #{userEmail}, phone = #{phone}, status=#{status},
          updatedate = now()
         where userid = #{userId}
@@ -72,8 +74,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			address,
 			account,
 			contract_sdate,
-			upper_member
-		FROM member
+			upper_member,
+			(select name from member a where a.userid = m.upper_member) as upper_member_name,
+			(select count(userid) from member a where a.upper_member = m.userid) as sub_member_cnt
+		FROM member m
 		WHERE userid = #{userid} 
 	</select>
+	<select id="search" resultType="com.example.spring02.model.member.dto.MemberVO">
+        select name AS userName,
+			userid AS userId,
+			email AS userEmail,
+			regdate AS userRegdate,
+			status,
+			phone
+		 from member
+		 where name like CONCAT('%',#{name},'%')
+    </select>
+    <select id="subMemberList" resultType="com.example.spring02.model.member.dto.MemberVO">
+        select name AS userName,
+			userid AS userId,
+			email AS userEmail,
+			regdate AS userRegdate,
+			contract_sdate,
+			status,
+			phone
+		 from member
+		 where upper_member = #{userid} 
+    </select>
 </mapper>

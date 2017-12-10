@@ -30,10 +30,12 @@
 		<property name="username" value="java" /> <property name="password" value="java1234" 
 		/> </bean> -->
 	<!-- SqlSessionFactory 객체 주입 -->
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<!-- <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> -->
+	<bean id="sqlSessionFactory" class="mybatis.RefreshableSqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="configLocation" value="classpath:/mybatis-config.xml"></property>
 		<property name="mapperLocations" value="classpath:mappers/**/*Mapper.xml"></property>
+		<property name="checkInterval" value="1000" />
 	</bean>
 	<!-- SqlSession 객체 주입 -->
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"

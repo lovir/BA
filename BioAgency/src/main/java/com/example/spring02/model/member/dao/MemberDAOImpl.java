@@ -61,4 +61,14 @@ public class MemberDAOImpl implements MemberDAO {
 		// TODO Auto-generated method stub
 		sqlSession.update("member.updateMember", vo);
 	}
+	@Override
+	public List<MemberVO> search(String name) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("member.search", name); 
+	}
+	@Override
+	public List<MemberVO> subMemberList(String userid) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("member.subMemberList", userid); 
+	}
 }

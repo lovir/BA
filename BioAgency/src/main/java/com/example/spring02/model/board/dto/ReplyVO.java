@@ -1,5 +1,5 @@
 package com.example.spring02.model.board.dto;
-
+ 
 import java.util.Date;
 
 public class ReplyVO {

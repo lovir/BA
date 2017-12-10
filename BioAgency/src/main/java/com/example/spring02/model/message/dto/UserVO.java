@@ -1,5 +1,5 @@
 package com.example.spring02.model.message.dto;
-
+ 
 public class UserVO {
 	private String userid;	// 사용자ID
 	private String userpw;	// 사용자PW

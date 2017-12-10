@@ -76,6 +76,21 @@
 			document.form1.submit();
 		});
 		
+		// 5. 회원 찾기
+		$("#btnIDSearch").click(function(){
+			var member_name = document.form1.upper_member_name.value;
+			var url = '/BioAgency/member/search.do?name=' + member_name;
+			
+			window.open(url);
+		});
+		
+		// 6. 하위 회원 리스트
+		$("#subMemberList").click(function(){
+			var userid = document.form1.userId.value;
+			var url = '/BioAgency/member/subMemberList.do?userid=' + userid;
+			
+			window.open(url);
+		});
 	});
 </script>
 </head>
@@ -128,17 +143,26 @@
 	<label for="name">계좌번호</label>
 	<input type="text" class="form-control" id="account" name="account" value="${dto.account }">
 	</div>
-	<div class="form-group">
-	<label for="name">상위 B.A 후원자</label>
-	<input type="text" class="form-control" id="upper_member" name="upper_member" value="${dto.upper_member }">
+	<div class="form-group row">
+		<div class="col-xs-8">
+			<label for="name">상위 B.A 후원자</label>
+			<input type="hidden" class="form-control" id="upper_member" name="upper_member" value="${dto.upper_member }">
+			<input type="text" class="form-control" id="upper_member_name" name="upper_member_name" value="${dto.upper_member_name }">
+		</div>
+		<div class="col-xs-4">	
+			<label for="name">찾기</label>
+			<input type="button" class="btn" id="btnIDSearch" value="검색">
+		</div>
 	</div>
+	
+  	
 	<div class="form-group">
 	<label for="name">계약 시작일</label>
 	<input type="text" class="form-control" id="contract_sdate" name="contract_sdate" value="${dto.contract_sdate }">
 	</div>
 	<div class="form-group">
-	<label for="name">관리 B.A </label>
-	
+	<label for="name">관리 B.A </label> : 
+	<a href="#" id="subMemberList">${dto.sub_member_cnt} 명</a>
 	</div>
     <c:choose>
 	    <c:when test="${dto.status == '요청'}">

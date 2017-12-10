@@ -1,5 +1,5 @@
 package com.example.spring02.service.board;
-
+ 
 import java.util.List;
 
 import javax.servlet.http.HttpSession;

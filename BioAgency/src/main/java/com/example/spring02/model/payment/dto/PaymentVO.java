@@ -1,5 +1,5 @@
 package com.example.spring02.model.payment.dto;
-
+ 
 import java.sql.Date;
 
 public class PaymentVO {

@@ -1,9 +1,10 @@
 package com.example.spring02.model.member.dao;
-
+ 
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+
 import com.example.spring02.model.member.dto.MemberVO;
 
 public interface MemberDAO {
@@ -18,4 +19,6 @@ public interface MemberDAO {
 	public MemberVO detailView(String userid);
 	public void deleteMember(String userid);
 	public void updateMember(MemberVO vo);
+	public List<MemberVO> search(String name);
+	public List<MemberVO> subMemberList(String userid);
 }

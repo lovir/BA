@@ -1,5 +1,5 @@
 package com.example.spring02.service.board;
-
+ 
 // 페이지 나누기 관련 작업 클래스
 public class BoardPager {
 	// 페이지당 게시물 수

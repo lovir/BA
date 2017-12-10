@@ -1,10 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>게시글 작성</title>
+<title>공지사항 글 상세보기</title>
 <%@ include file="../include/header.jsp" %>
+
 <script type="text/javascript" src="${path}/include/js/common.js"></script>
 <script>
 	$(document).ready(function(){
@@ -330,36 +332,38 @@
 		<!-- show가 y면 -->	
 			<!-- 게시물 상세보기 영역 -->
 			<form name="form1" id="form1" method="post">
-				<div>		<!-- 원하는 날짜형식으로 출력하기 위해 fmt태그 사용 -->
-					작성일자 : <fmt:formatDate value="${dto.regdate}" pattern="yyyy-MM-dd a HH:mm:ss"/>
+				<div class="form-group">		<!-- 원하는 날짜형식으로 출력하기 위해 fmt태그 사용 -->
+					<label for="name">작성일자</label> : <fmt:formatDate value="${dto.regdate}" pattern="yyyy-MM-dd a HH:mm:ss"/>
 							<!-- 날짜 형식 => yyyy 4자리연도, MM 월, dd 일, a 오전/오후, HH 24시간제, hh 12시간제, mm 분, ss 초 -->
 				</div>
-				<div>
-					조회수 : ${dto.viewcnt}
+				<div class="form-group">
+					<label for="name">조회수</label> :	${dto.viewcnt}
 				</div>
-				<div>
-					제목
-					<input name="title" id="title" size="80" value="${dto.title}" placeholder="제목을 입력해주세요">
+				<div class="form-group">
+					<label for="name">제목</label>
+					<input class="form-control" name="title" id="title" value="${dto.title}" placeholder="제목을 입력해주세요">
 				</div>
-				<div>
-					내용
-					<textarea name="content" id="content" rows="4" cols="80" placeholder="내용을 입력해주세요">${dto.content}</textarea>
+				<div class="form-group">
+					<label for="name">내용</label>
+					<textarea class="form-control" name="content" id="content" rows="4"  placeholder="내용을 입력해주세요">${dto.content}</textarea>
 				</div>
+				<!--
 				<div>
 					이름
-					<%-- <input name="writer" id="writer" value="${dto.writer}" placeholder="이름을 입력해주세요"> --%>
+					<input name="writer" id="writer" value="${dto.writer}" placeholder="이름을 입력해주세요"> 
 					${dto.userName}
 				</div>
-				<!-- 첨부파일 목록 -->
+				 첨부파일 목록
 				<div>
 					첨부파일 
 					<div id="uploadedList"></div>
 				</div>
-				<!-- 첨부파일을 드래그할 영역 -->
+				첨부파일을 드래그할 영역 
 				<div>
 					<div id="fileDrop"></div>
 				</div>
-				<div style="width:650px; text-align: center;">
+				 -->
+				<div class="form-group">
 					<!-- 게시물번호를 hidden으로 처리 -->
 					<input type="hidden" name="bno" value="${dto.bno}">
 				<!-- 본인이 쓴 게시물만 수정, 삭제가 가능하도록 처리 -->

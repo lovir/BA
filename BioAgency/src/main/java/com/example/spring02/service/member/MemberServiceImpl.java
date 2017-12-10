@@ -78,5 +78,15 @@ public class MemberServiceImpl implements MemberService {
 		// TODO Auto-generated method stub
 		memberDao.updateMember(vo);
 	}
+	@Override
+	public List<MemberVO> search(String name) {
+		// TODO Auto-generated method stub
+		return memberDao.search(name);
+	}
+	@Override
+	public List<MemberVO> subMemberList(String userid) {
+		// TODO Auto-generated method stub
+		return memberDao.subMemberList(userid);
+	}
 	
 }

@@ -124,4 +124,28 @@ public class MemberController {
 		memberService.update(vo);
 		return "redirect:list.do";
 	}
+	
+	// 10. 회원 찾기
+	@RequestMapping(value="search.do", method=RequestMethod.GET)
+    public ModelAndView search(@RequestParam String name, HttpSession session) {
+		List<MemberVO> list = memberService.search(name);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list); // list
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("map", map);
+        mav.setViewName("member/search");
+        return mav;
+    }	
+	
+	// 11. 하위 회원 리스트
+	@RequestMapping(value="subMemberList.do", method=RequestMethod.GET)
+    public ModelAndView subMemberList(@RequestParam String userid, HttpSession session) {
+		List<MemberVO> list = memberService.subMemberList(userid);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list); // list
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("map", map);
+        mav.setViewName("member/subMemberList");
+        return mav;
+    }
 }

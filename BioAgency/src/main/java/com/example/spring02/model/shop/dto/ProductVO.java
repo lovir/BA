@@ -1,5 +1,5 @@
 package com.example.spring02.model.shop.dto;
-
+ 
 import org.springframework.web.multipart.MultipartFile;
 
 public class ProductVO {

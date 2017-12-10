@@ -87,10 +87,11 @@ $(document).ready(function(){
 	</div>	
 	<div class="form-group row">
 		<div class="col-xs-8">
-			<label for="name">회원 찾기</label>
+			<label for="name">회원</label>
 			<input type="text" class="form-control" id="sales_member" name="sales_member" value="${dto.sales_member}">
 		</div>
 		<div class="col-xs-4">	
+			<label for="name">찾기</label>
 			<input type="button" class="btn" id="btnIDSearch" value="검색">
 		</div>
 	</div>

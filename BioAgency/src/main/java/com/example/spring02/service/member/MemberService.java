@@ -20,4 +20,6 @@ public interface MemberService {
 	public Object read(String userid);
 	public void delete(String userid);
 	public void update(MemberVO vo);
+	public List<MemberVO> search(String name);
+	public List<MemberVO> subMemberList(String userid);
 }
