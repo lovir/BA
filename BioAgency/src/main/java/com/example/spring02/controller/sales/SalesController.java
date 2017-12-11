@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.spring02.model.member.dto.MemberVO;
 import com.example.spring02.model.sales.dto.SalesVO;
+import com.example.spring02.service.member.MemberService;
 import com.example.spring02.service.sales.SalesService;
 
 
@@ -28,6 +30,9 @@ public class SalesController {
 	
 	@Inject
 	SalesService salesService;
+	
+	@Inject
+	MemberService memberService;
 	
 	// 01. 수당 목록
 	@RequestMapping("list.do")
@@ -64,14 +69,21 @@ public class SalesController {
 	//@RequestMapping(value="update.do", method=RequestMethod.POST)
 	@RequestMapping("update.do")
 	public String update(@ModelAttribute SalesVO vo) throws Exception{
-		salesService.update(vo);
+		if (vo.getPid() == 6)
+			salesService.updateEtc(vo);
+		else
+			salesService.update(vo);
 		return "redirect:list.do";
 	}
 	
 	//06. 매출 등록 처리
 	@RequestMapping("insert.do")
 	public String insert(@ModelAttribute SalesVO vo) throws Exception{
-		salesService.insert(vo);
+		if (vo.getPid() == 6)
+			salesService.insertEtc(vo);
+		else
+			salesService.insert(vo);
+		
 		return "redirect:list.do";
 	}
 	
@@ -80,4 +92,16 @@ public class SalesController {
 	public String insertForm(){
 		return "sales/insertForm";
 	}
+	
+	// 09. 회원 찾기
+	@RequestMapping(value="search.do", method=RequestMethod.GET)
+    public ModelAndView search(@RequestParam String name, HttpSession session) {
+		List<MemberVO> list = memberService.search(name);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list); // list
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("map", map);
+        mav.setViewName("sales/search");
+        return mav;
+    }	
 }

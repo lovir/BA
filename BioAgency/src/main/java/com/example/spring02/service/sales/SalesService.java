@@ -13,5 +13,7 @@ public interface SalesService {
 	public Object read(int seq);
 	public void delete(int seq);
 	public void update(SalesVO vo);
+	public void insertEtc(SalesVO vo);
+	public void updateEtc(SalesVO vo);
 
 }

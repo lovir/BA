@@ -13,4 +13,8 @@ public interface SalesDAO {
 	public void updateSales(SalesVO vo);
 	public void insertPayment(SalesVO vo);
 	public void updatePayment(SalesVO vo);
+	public void insertSalesEtc(SalesVO vo);
+	public void insertPaymentEtc(SalesVO vo);
+	public void updateSalesEtc(SalesVO vo);
+	public void updatePaymentTec(SalesVO vo);
 }

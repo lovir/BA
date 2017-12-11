@@ -17,10 +17,31 @@ $(document).ready(function(){
 			document.form1.sales_member.focus();
 			return;
 		}
+		if (document.form1.pid.value != '6'){
+			document.form1.purchase_amount.value=0;
+			document.form1.payment_amount.value=0;
+		}
 		document.form1.action="insert.do";
-		
+	
 		document.form1.submit();
 	});	
+	
+	// 2. 회원 찾기
+	$("#btnIDSearch").click(function(){
+		var member_name = document.form1.sales_member_name.value;
+		var url = '/BioAgency/sales/search.do?name=' + member_name;
+		
+		window.open(url);
+	});
+	
+	// 3. 상품 선택
+	$("#pid").change(function(){
+		if (document.form1.pid.value == '6'){
+			$("#amountDiv").show();
+		} else {
+			$("#amountDiv").hide();
+		}
+	});
 });
 </script>
 <<body>
@@ -43,44 +64,61 @@ $(document).ready(function(){
 
   <form name="form1" id="form1" method="get">
   <input type="hidden" name="status" id="status" value="구매">  
-    <div class="form-group">
-	<label for="name">구매자 이름</label>
-	<input type="text" class="form-control" id="purchase_name" name="purchase_name">
+    <div class="form-group row">
+	    <div class="col-xs-6">
+			<label for="name">구매자 이름</label>
+			<input type="text" class="form-control" id="purchase_name" name="purchase_name">
+		</div>
+		<div class="col-xs-6">
+		<label for="sel1">상품명 </label>
+		 <select class="form-control" id="pid" name="pid">
+		   <option value="1">가입금</option>
+		   <option value="2">바이오가드</option>
+		   <option value="3">힐링타임</option>
+		   <option value="4">코클링</option>
+		   <option value="5">코로로</option>
+		   <option value="6">기타</option>
+		   <option value="7">인상채득비용</option>
+		 </select>
+		</div>
 	</div>
-	<div class="form-group">
-	<label for="sel1">상품명 </label>
-	 <select class="form-control" id="pid" name="pid">
-	   <option value="1">가입금</option>
-	   <option value="2">바이오가드</option>
-	   <option value="3">힐링타임</option>
-	   <option value="4">코클링</option>
-	   <option value="5">코로로</option>
-	   <option value="6">기타</option>
-	 </select>
-	</div>
-	<!-- <div class="form-group">
-	<label for="name">구매 금액(원)</label>
-	<input type="text" class="form-control" id="purchase_amount" name="purchase_amount">
-	</div> -->
-	<div class="form-group">
-	<label for="name">구매일</label>
-	<input type="datetime" class="form-control" id="purchase_date" name="purchase_date">
-	<label for="name">지급 예상일</label>
-	<input type="datetime" class="form-control" id="expected_date" name="expected_date">
+	<div class="form-group row" id="amountDiv" style="display:none">
+		<div class="col-xs-6">
+			<label for="name">구매 금액(원)</label>
+			<input type="text" class="form-control" id="purchase_amount" name="purchase_amount">
+		</div>
+		<div class="col-xs-6">
+			<label for="name">수당 금액(원)</label>
+			<input type="text" class="form-control" id="payment_amount" name="payment_amount">
+		</div>
 	</div>
 	<div class="form-group row">
-		<div class="col-xs-8">
+	  <div class="col-xs-6">
+	    <label for="purchase_date">구매일</label>
+	    <input type="datetime" class="form-control" id="purchase_date" name="purchase_date">
+	  </div>
+	  <div class="col-xs-6">
+	    <label for="expected_date">지급 예상일</label>
+	    <input type="datetime" class="form-control" id="expected_date" name="expected_date">
+	  </div>
+	</div>
+	<div class="form-group row">
+		<div class="col-xs-6">
 			<label for="name">회원</label>
-			<input type="text" class="form-control" id="sales_member" name="sales_member">
+			<input type="text" class="form-control" id="sales_member_name" name="sales_member_name">
+			<input type="hidden" class="form-control" id="sales_member" name="sales_member">
 		</div>
-		<div class="col-xs-4">	
-			<label for="name">찾기</label>
-			<input type="button" class="btn" id="btnIDSearch" value="검색">
+		<div class="col-xs-6">	
+			<label for="name">찾기</label><br>
+			<button type="button" class="btn" id="btnIDSearch">검색</button>
 		</div>
-	</div>	
-	<div class="form-group">
-	<label for="name">1차 후원자</label>
-	<input type="text" class="form-control" id="upper_member" name="upper_member">
+	</div>
+	<div class="form-group row">
+		<div class="col-xs-6">
+			<label for="name">1차 후원자</label>
+			<input type="hidden" class="form-control" id="upper_member" name="upper_member">
+			<input type="text" class="form-control" id="upper_member_name" name="upper_member_name">
+		</div>
 	</div>
 </form>     
 <p  style="text-align: right">    <button type="button" class="btn btn-primary" id="btnRegist">매출 등록</button> </p>							

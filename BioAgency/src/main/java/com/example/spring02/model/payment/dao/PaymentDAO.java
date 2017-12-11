@@ -11,4 +11,8 @@ public interface PaymentDAO {
 	public PaymentVO detailView(int seq);
 	public void deletePayment(int seq);
 	public void updatePayment(PaymentVO vo);
+	public int sumRegist(String user_id);
+	public int sumSales(String user_id);
+	public int sumPayment(String user_id);
+	public int sumEtc(String user_id);
 }

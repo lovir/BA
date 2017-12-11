@@ -12,5 +12,9 @@ public interface PaymentService {
 	public Object read(int seq);
 	public void delete(int seq);
 	public void update(PaymentVO vo);
+	public int sumRegist(HttpSession session);
+	public int sumSales(HttpSession session);
+	public int sumPayment(HttpSession session);
+	public int sumEtc(HttpSession session);
 
 }

@@ -40,4 +40,32 @@ public class PaymentServiceImpl implements PaymentService {
 			// TODO Auto-generated method stub
 			paymentDao.updatePayment(vo);
 		}
+
+		@Override
+		public int sumRegist(HttpSession session) {
+			// TODO Auto-generated method stub
+			String userId = session.getAttribute("userId").toString();
+			return paymentDao.sumRegist(userId);
+		}
+
+		@Override
+		public int sumSales(HttpSession session) {
+			// TODO Auto-generated method stub
+			String userId = session.getAttribute("userId").toString();
+			return paymentDao.sumSales(userId);		
+		}
+
+		@Override
+		public int sumPayment(HttpSession session) {
+			// TODO Auto-generated method stub
+			String userId = session.getAttribute("userId").toString();
+			return paymentDao.sumPayment(userId);		
+		}
+
+		@Override
+		public int sumEtc(HttpSession session) {
+			// TODO Auto-generated method stub
+			String userId = session.getAttribute("userId").toString();
+			return paymentDao.sumEtc(userId);		
+		}
 }

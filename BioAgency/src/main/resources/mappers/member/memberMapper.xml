@@ -86,8 +86,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			email AS userEmail,
 			regdate AS userRegdate,
 			status,
-			phone
-		 from member
+			phone,
+			upper_member,
+			(select name from member a where a.userid = m.upper_member) as upper_member_name
+		 from member m
 		 where name like CONCAT('%',#{name},'%')
     </select>
     <select id="subMemberList" resultType="com.example.spring02.model.member.dto.MemberVO">

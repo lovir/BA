@@ -8,12 +8,14 @@ public class SalesVO {
 	private String purchase_date;
 	private String expected_date;
 	private String sales_member;
+	private String sales_member_name;
 	private int pid;
 	private String product_name;
 	private String purchase_name;
 	private int purchase_amount;
 	private String upper_member;
-	private int upper_amount;
+	private String upper_member_name;
+	private int payment_amount;
 	private String status;
 	private Date regdate;
 	private Date updatedate;
@@ -55,11 +57,11 @@ public class SalesVO {
 	public void setUpper_member(String upper_member) {
 		this.upper_member = upper_member;
 	}
-	public int getUpper_amount() {
-		return upper_amount;
+	public int getPayment_amount() {
+		return payment_amount;
 	}
-	public void setUpper_amount(int upper_amount) {
-		this.upper_amount = upper_amount;
+	public void setPayment_amount(int payment_amount) {
+		this.payment_amount = payment_amount;
 	}
 	public String getStatus() {
 		return status;
@@ -96,6 +98,18 @@ public class SalesVO {
 	}
 	public void setExpected_date(String expected_date) {
 		this.expected_date = expected_date;
+	}
+	public String getUpper_member_name() {
+		return upper_member_name;
+	}
+	public void setUpper_member_name(String upper_member_name) {
+		this.upper_member_name = upper_member_name;
+	}
+	public String getSales_member_name() {
+		return sales_member_name;
+	}
+	public void setSales_member_name(String sales_member_name) {
+		this.sales_member_name = sales_member_name;
 	}
 	
 }

@@ -38,4 +38,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM payment
 		WHERE seq = #{seq} 
 	</select>
+	<select id="sumRegist" resultType="int">
+		select 
+			sum(s.payment_amount) as cnt
+		from sales s 
+		where 
+			s.sales_member = #{userId} and pid = 1
+	</select>
+	<select id="sumSales" resultType="int">
+		select 
+			sum(s.payment_amount) as cnt
+		from sales s 
+		where 
+			s.sales_member = #{userId} and pid in (2,3,4,5)
+	</select>
+	<select id="sumEtc" resultType="int">
+		select 
+			sum(s.payment_amount) as cnt
+		from sales s 
+		where 
+			s.sales_member = #{userId} and pid in (6, 7)
+	</select>
+	<select id="sumPayment" resultType="int">
+		select 
+			sum(s.payment_amount)
+		from payment s 
+		where 
+			s.member_id = #{userId}
+	</select>
 </mapper>

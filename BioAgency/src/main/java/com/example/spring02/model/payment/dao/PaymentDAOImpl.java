@@ -32,4 +32,24 @@ public class PaymentDAOImpl implements PaymentDAO {
 		sqlSession.update("payment.updatePayment", vo);
 
 	}
+	@Override
+	public int sumRegist(String user_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("payment.sumRegist", user_id);
+	}
+	@Override
+	public int sumSales(String user_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("payment.sumSales", user_id);
+	}
+	@Override
+	public int sumPayment(String user_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("payment.sumPayment", user_id);
+	}
+	@Override
+	public int sumEtc(String user_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("payment.sumEtc", user_id);
+	}
 }

@@ -33,6 +33,25 @@ public class PaymentController {
 	// 01. 수당 목록
 	@RequestMapping("list.do")
     public ModelAndView list(HttpSession session){
+		int sumRegist = paymentService.sumRegist(session);
+		int sumSales = paymentService.sumSales(session);
+		int sumPayment = paymentService.sumPayment(session);
+		int sumEtc = paymentService.sumEtc(session);
+		
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("sumRegist", sumRegist);
+		map.put("sumSales", sumSales);
+		map.put("sumPayment", sumPayment);
+		map.put("sumEtc", sumEtc);
+		map.put("sumTotal", sumRegist + sumSales + sumPayment + sumEtc);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("map", map); // 맵에 저장된 데이터를 mav에 저장
+		mav.setViewName("payment/list"); // 뷰를 list.jsp로 설정
+		return mav; // list.jsp로 List가 전달된다.
+    }	
+	
+	/*public ModelAndView list(HttpSession session){
 		List<PaymentVO> list = paymentService.list(session);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list); // list
@@ -41,6 +60,7 @@ public class PaymentController {
         mav.setViewName("payment/list");
         return mav;
     }	
+	*/
 	
 	// 02. 수당 상세 보기
 	@RequestMapping(value="detail.do", method=RequestMethod.GET)

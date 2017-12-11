@@ -9,6 +9,10 @@
 <script>
 $(document).ready(function(){
 	
+	if (document.form1.pid.value == '6'){
+		$("#amountDiv").show();
+	}
+	
 	// 1.  수정
 	$("#btnUpdete").click(function(){
 		/* var purchase_amount = $("#purchase_amount").val();
@@ -36,6 +40,23 @@ $(document).ready(function(){
 		// 폼에 입력한 데이터를 서버로 전송
 		document.form1.submit();
 	});
+	
+	// 4. 회원 찾기
+	$("#btnIDSearch").click(function(){
+		var member_name = document.form1.sales_member_name.value;
+		var url = '/BioAgency/sales/search.do?name=' + member_name;
+		
+		window.open(url);
+	});
+	
+	// 5. 상품 선택
+	$("#pid").change(function(){
+		if (document.form1.pid.value == '6'){
+			$("#amountDiv").show();
+		} else {
+			$("#amountDiv").hide();
+		}
+	});
 });
 </script>
 <<body>
@@ -58,23 +79,34 @@ $(document).ready(function(){
 
   <form name="form1" id="form1" method="get">
   <input type="hidden" name="seq" id="seq" value="${dto.seq }">  
-    <div class="form-group">
-	<label for="name">구매자 이름</label>
-	<input type="text" class="form-control" id="purchase_name" name="purchase_name" value="${dto.purchase_name }">
+    <div class="form-group row">
+     	<div class="col-xs-6">
+			<label for="name">구매자 이름</label>
+			<input type="text" class="form-control" id="purchase_name" name="purchase_name" value="${dto.purchase_name }">
+		</div>
+		<div class="col-xs-6">
+		<label for="sel1">상품명 </label>
+		 <select class="form-control" id="pid" name="pid">
+		   <option value="1" <c:choose><c:when test="${dto.pid == '1'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>가입금</option>
+		   <option value="2" <c:choose><c:when test="${dto.pid == '2'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>바이오가드</option>
+		   <option value="3" <c:choose><c:when test="${dto.pid == '3'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>힐링타임</option>
+		   <option value="4" <c:choose><c:when test="${dto.pid == '4'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>코클링</option>
+		   <option value="5" <c:choose><c:when test="${dto.pid == '5'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>코로로</option>
+		   <option value="6" <c:choose><c:when test="${dto.pid == '6'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>기타</option>
+		   <option value="7" <c:choose><c:when test="${dto.pid == '7'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>인상채득비용</option>	
+		 </select>
+		</div>
 	</div>
-	<div class="form-group">
-	<label for="sel1">상품명 </label>
-	 <select class="form-control" id="pid" name="pid">
-	   <option value="1" <c:choose><c:when test="${dto.pid == '1'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>가입금</option>
-	   <option value="2" <c:choose><c:when test="${dto.pid == '2'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>바이오가드</option>
-	   <option value="3" <c:choose><c:when test="${dto.pid == '3'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>힐링타임</option>
-	   <option value="4" <c:choose><c:when test="${dto.pid == '4'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>코클링</option>
-	 </select>
+	<div class="form-group row" id="amountDiv" style="display:none">
+		<div class="col-xs-6">
+			<label for="name">구매 금액(원)</label>
+			<input type="text" class="form-control" id="purchase_amount" name="purchase_amount" value="${dto.purchase_amount }">
+		</div>
+		<div class="col-xs-6">
+			<label for="name">수당 금액(원)</label>
+			<input type="text" class="form-control" id="payment_amount" name="payment_amount" value="${dto.payment_amount }">
+		</div>
 	</div>
-	<!-- <div class="form-group">
-	<label for="name">구매 금액(원)</label>
-	<input type="text" class="form-control" id="purchase_amount" name="purchase_amount" value="${dto.purchase_amount}">
-	</div> -->
 	<div class="form-group row">
 	  <div class="col-xs-6">
 	    <label for="purchase_date">구매일</label>
@@ -86,26 +118,30 @@ $(document).ready(function(){
 	  </div>
 	</div>	
 	<div class="form-group row">
-		<div class="col-xs-8">
+		<div class="col-xs-6">
 			<label for="name">회원</label>
-			<input type="text" class="form-control" id="sales_member" name="sales_member" value="${dto.sales_member}">
+			<input type="text" class="form-control" id="sales_member_name" name="sales_member_name" value="${dto.sales_member_name }">
+			<input type="hidden" class="form-control" id="sales_member" name="sales_member" value="${dto.sales_member }">
 		</div>
-		<div class="col-xs-4">	
-			<label for="name">찾기</label>
+		<div class="col-xs-6">	
+			<label for="name">찾기</label><br>
 			<input type="button" class="btn" id="btnIDSearch" value="검색">
 		</div>
 	</div>
-	<div class="form-group">
-	<label for="name">1차 후원자</label>
-	<input type="text" class="form-control" id="upper_member" name="upper_member" value="${dto.upper_member}">
-	</div>
-	<div class="form-group">
-	<label for="status">구매상태 </label>
-	 <select class="form-control" id="status" name="status">
-	   <option value="구매" <c:choose><c:when test="${dto.status == '구매'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>구매</option>
-	   <option value="환불" <c:choose><c:when test="${dto.status == '환불'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>환불</option>
-	   <option value="수당지급" <c:choose><c:when test="${dto.status == '수당지급'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>수당지급</option>
-	 </select>
+	<div class="form-group row">
+		<div class="col-xs-6">
+			<label for="name">1차 후원자</label>
+			<input type="hidden" class="form-control" id="upper_member" name="upper_member" value="${dto.upper_member}">
+			<input type="text" class="form-control" id="upper_member_name" name="upper_member_name" value="${dto.upper_member_name}">
+		</div>
+		<div class="col-xs-6">
+		<label for="status">구매상태 </label>
+		 <select class="form-control" id="status" name="status">
+		   <option value="구매" <c:choose><c:when test="${dto.status == '구매'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>구매</option>
+		   <option value="환불" <c:choose><c:when test="${dto.status == '환불'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>환불</option>
+		   <option value="수당지급" <c:choose><c:when test="${dto.status == '수당지급'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>수당지급</option>
+		 </select>
+		</div>
 	</div>	
 </form>     
 <p  style="text-align: center">  

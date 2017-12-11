@@ -49,4 +49,18 @@ public class SalesServiceImpl implements SalesService {
 			salesDao.insertSales(vo);
 			salesDao.insertPayment(vo);
 		}
+
+		@Override
+		public void insertEtc(SalesVO vo) {
+			// TODO Auto-generated method stub
+			salesDao.insertSalesEtc(vo);
+			salesDao.insertPaymentEtc(vo);
+		}
+
+		@Override
+		public void updateEtc(SalesVO vo) {
+			// TODO Auto-generated method stub
+			salesDao.updateSalesEtc(vo);
+			salesDao.updatePaymentTec(vo);
+		}
 }
