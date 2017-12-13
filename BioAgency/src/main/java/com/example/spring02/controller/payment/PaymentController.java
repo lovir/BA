@@ -95,4 +95,29 @@ public class PaymentController {
 		paymentService.insert(vo);
 		return "redirect:list.do";
 	}*/
+	
+	// 01. 수당 목록
+	@RequestMapping(value="detailList.do", method=RequestMethod.GET)
+    public ModelAndView detailList(@RequestParam int pid, HttpSession session){
+		ModelAndView mav = new ModelAndView();
+				
+		List<SalesVO> Slist = null;
+		List<PaymentVO> Plist = null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		if (pid == 4)
+		{
+			Plist = paymentService.selectPayment(session);
+			map.put("list", Plist); // list
+
+		} else			
+		{
+			Slist = paymentService.selectSales(session, pid);
+			map.put("list", Slist); // list
+		}
+		map.put("pid", pid);
+        mav.addObject("map", map);
+        mav.setViewName("payment/detailList");
+        return mav;
+    }
 }

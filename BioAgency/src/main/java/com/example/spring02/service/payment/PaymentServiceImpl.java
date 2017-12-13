@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.spring02.model.payment.dao.PaymentDAO;
 import com.example.spring02.model.payment.dto.PaymentVO;
+import com.example.spring02.model.sales.dto.SalesVO;
 
 @Service // 현재 클래스를 스프링에서 관리하는 service bean으로 등록
 public class PaymentServiceImpl implements PaymentService {
@@ -67,5 +68,19 @@ public class PaymentServiceImpl implements PaymentService {
 			// TODO Auto-generated method stub
 			String userId = session.getAttribute("userId").toString();
 			return paymentDao.sumEtc(userId);		
+		}
+
+		@Override
+		public List<PaymentVO> selectPayment(HttpSession session) {
+			// TODO Auto-generated method stub
+			String userId = session.getAttribute("userId").toString();
+			return paymentDao.selectPayment(userId);
+		}
+
+		@Override
+		public List<SalesVO> selectSales(HttpSession session, int pid) {
+			// TODO Auto-generated method stub
+			String userId = session.getAttribute("userId").toString();
+			return paymentDao.selectSales(userId, pid) ;
 		}
 }

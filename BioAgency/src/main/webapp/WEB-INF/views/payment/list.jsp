@@ -7,7 +7,30 @@
 <title>수당 내역</title>
 <%@ include file="../include/header.jsp" %>
 </head>
+<script>
+	$(document).ready(function(){
 
+		$("#btnDetailList1").click(function(){
+			var url = 'detailList.do?pid=1';
+			location.href = url;
+		});
+		
+		$("#btnDetailList2").click(function(){
+			var url = 'detailList.do?pid=2';
+			location.href = url;
+		});
+		
+		$("#btnDetailList3").click(function(){
+			var url = 'detailList.do?pid=3';
+			location.href = url;
+		});
+		
+		$("#btnDetailList4").click(function(){
+			var url = 'detailList.do?pid=4';
+			location.href = url;
+		});
+	});
+</script>
 <body>
 
 <%@ include file="../include/menu.jsp" %>
@@ -42,12 +65,12 @@
 		<tr>
 			<td>B.A 관리비</td>
 			<td>${map.sumPayment} 원</td>
-			<td><button type="button" class="btn btn-primary" id="btnDetailList3">상세 내역</button></td>
+			<td><button type="button" class="btn btn-primary" id="btnDetailList4">상세 내역</button></td>
 		</tr>
 		<tr>
 			<td>기타 수당</td>
 			<td>${map.sumEtc} 원</td>
-			<td><button type="button" class="btn btn-primary" id="btnDetailList4">상세 내역</button></td>
+			<td><button type="button" class="btn btn-primary" id="btnDetailList3">상세 내역</button></td>
 		</tr>
 		<tr>
 			<td>합계</td>

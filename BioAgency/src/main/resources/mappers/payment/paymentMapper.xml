@@ -66,4 +66,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where 
 			s.member_id = #{userId}
 	</select>
+	<select id="selectSales1" resultType="com.example.spring02.model.sales.dto.SalesVO">
+        select * from sales where sales_member = #{userId} and pid in (1)
+    </select>
+	<select id="selectSales2" resultType="com.example.spring02.model.sales.dto.SalesVO">
+        select * from sales where sales_member = #{userId} and pid in (2,3,4,5)
+    </select>
+	<select id="selectSales3" resultType="com.example.spring02.model.sales.dto.SalesVO">
+        select * from sales where sales_member = #{userId} and pid in (6, 7)
+    </select>
+    <select id="selectPayment" resultType="com.example.spring02.model.payment.dto.PaymentVO">
+        select * from payment where member_id = #{userId}
+    </select>
 </mapper>

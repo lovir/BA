@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.example.spring02.model.payment.dao.PaymentDAO;
 import com.example.spring02.model.payment.dto.PaymentVO;
+import com.example.spring02.model.sales.dto.SalesVO;
 
 @Repository // 현재 클래스를 스프링에서 관리하는 dao bean으로 등록
 public class PaymentDAOImpl implements PaymentDAO {
@@ -51,5 +52,21 @@ public class PaymentDAOImpl implements PaymentDAO {
 	public int sumEtc(String user_id) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("payment.sumEtc", user_id);
+	}
+	@Override
+	public List<PaymentVO> selectPayment(String user_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("payment.selectPayment", user_id);
+	}
+	@Override
+	public List<SalesVO> selectSales(String user_id, int pid) {
+		// TODO Auto-generated method stub
+		if (pid == 1){
+			return sqlSession.selectList("payment.selectSales1", user_id);
+		}else if (pid == 2) {
+			return sqlSession.selectList("payment.selectSales2", user_id);
+		}else {
+			return sqlSession.selectList("payment.selectSales3", user_id);
+		}
 	}
 }
