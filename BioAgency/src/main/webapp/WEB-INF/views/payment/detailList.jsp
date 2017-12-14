@@ -82,7 +82,35 @@
 	    <c:when test="${map.pid == 4}">
 			<h1  style="text-align: center">
 	    	<small>B.A 관리비 상세 내역</small>
-	    	</h1>				
+	    	</h1>			
+
+<p>				
+	<table class="table table-striped" >
+		<tr>
+			<th>구매 번호</th>
+			<th>관리 B.A</th>
+			<th>구매자 성명</th>
+			<th>상품명</th>
+			<th>수당 금액(원)</th>
+			<th>구매일</th>
+			<th>지급 예상일</th>
+			<th>현재 상태</th>
+		</tr>
+	    <c:forEach var="payment" items="${map.list}">
+	    <tr>
+	    		<td>${payment.sales_seq}</a></td>	
+				<td>${payment.sales_member_name}</a></td>
+				<td>${payment.purchase_name}</a></td>
+				<td>${payment.product_name}</a></td>
+	        	<td>${payment.payment_amount}</td>
+	        	<td>${payment.purchase_date}</td>
+	        	<td>${payment.amount_date}</td>
+	        	<td>${payment.status}</td>
+	    </tr>
+	    </c:forEach>
+    </table>
+</p>
+	    		
 	    </c:when>
 	    <c:when test="${map.pid == 3}">
 			<h1  style="text-align: center">

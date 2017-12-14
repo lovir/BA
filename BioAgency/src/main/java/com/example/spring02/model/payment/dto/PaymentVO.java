@@ -4,7 +4,11 @@ import java.sql.Date;
 
 public class PaymentVO {
 	private int seq;
-	private int salse_seq;
+	private int sales_seq;
+	private String sales_member_name;
+	private String product_name;
+	private String purchase_name;
+	private String purchase_date;
 	private Date amount_date;
 	private String member_id;
 	private String member_name;
@@ -68,11 +72,34 @@ public class PaymentVO {
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
-	public int getSalse_seq() {
-		return salse_seq;
+	public int getSales_seq() {
+		return sales_seq;
 	}
-	public void setSalse_seq(int salse_seq) {
-		this.salse_seq = salse_seq;
+	public void setSales_seq(int sales_seq) {
+		this.sales_seq = sales_seq;
 	}
-
+	public String getSales_member_name() {
+		return sales_member_name;
+	}
+	public void setSales_member_name(String sales_member_name) {
+		this.sales_member_name = sales_member_name;
+	}
+	public String getProduct_name() {
+		return product_name;
+	}
+	public void setProduct_name(String product_name) {
+		this.product_name = product_name;
+	}
+	public String getPurchase_name() {
+		return purchase_name;
+	}
+	public void setPurchase_name(String purchase_name) {
+		this.purchase_name = purchase_name;
+	}
+	public String getPurchase_date() {
+		return purchase_date;
+	}
+	public void setPurchase_date(String purchase_date) {
+		this.purchase_date = purchase_date;
+	}
 }

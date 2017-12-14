@@ -76,6 +76,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select * from sales where sales_member = #{userId} and pid in (6, 7)
     </select>
     <select id="selectPayment" resultType="com.example.spring02.model.payment.dto.PaymentVO">
-        select * from payment where member_id = #{userId}
+        select p.*,
+		(select m.name from member m where s.sales_member=m.userid) as sales_member_name,
+		(select pr.product_name from product pr where s.pid = pr.pid) as product_name,
+		 s.purchase_name as purchase_name,
+		 s.purchase_date  purchase_date
+		 from payment p, sales s
+		 where member_id =  #{userId}
+		 and s.seq = p.sales_seq
     </select>
 </mapper>
