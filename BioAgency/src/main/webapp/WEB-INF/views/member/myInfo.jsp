@@ -50,41 +50,8 @@
 			// 폼에 입력한 데이터를 서버로 전송
 			document.form1.submit();
 		});
-		
-		// 2. 삭제
-		$("#btnDelete").click(function(){
-			if(confirm("삭제하시겠습니까?")){
-				document.form1.action = "delete.do";
-				document.form1.submit();
-			}
-		});
-		
-		// 3. 승인
-		$("#btnAgree").click(function(){
-			document.form1.action="update.do";
-			document.form1.status.value="회원";
-			//alert(document.form1.status.value);
-			// 폼에 입력한 데이터를 서버로 전송
-			document.form1.submit();
-		});
-		
-		// 4. 거절
-		$("#btnDeny").click(function(){
-			document.form1.action="update.do";
-			document.form1.status.value="거절";
-			// 폼에 입력한 데이터를 서버로 전송
-			document.form1.submit();
-		});
-		
-		// 5. 회원 찾기
-		$("#btnIDSearch").click(function(){
-			var member_name = document.form1.upper_member_name.value;
-			var url = '/BioAgency/member/search.do?name=' + member_name;
 			
-			window.open(url);
-		});
-		
-		// 6. 하위 회원 리스트
+		// 2. 하위 회원 리스트
 		$("#subMemberList").click(function(){
 			var userid = document.form1.userId.value;
 			var url = '/BioAgency/member/subMemberList.do?userid=' + userid;
@@ -109,12 +76,11 @@
     <div class="col-sm-8 text-left"> 
 				
 <h1>
-	<small>회원 정보 보기</small>
+	<small>내 정보 보기</small>
 </h1>				
 <p>
 
   <form name="form1" id="form1" method="get">
-  <input type="hidden" name="status" id="status" value="${dto.status }">  
     <div class="form-group row">
     	<div class="col-xs-6">
 			<label for="name">가입자 이름</label>
@@ -137,6 +103,16 @@
 	</div>	
 	<div class="form-group row">
     	<div class="col-xs-6">
+			<label for="name">비밀번호</label>
+			<input type="password" class="form-control" id="userPw" name="userPw">
+		</div>
+		<div class="col-xs-6">
+			<label for="name">비밀번호 확인</label>
+			<input type="password" class="form-control" id="pwd_CHECK" name="pwd_CHECK">
+		</div>
+	</div>		
+	<div class="form-group row">
+    	<div class="col-xs-6">
 			<label for="name">이메일</label>
 			<input type="text" class="form-control" id="userEmail" name="userEmail" value="${dto.userEmail }">
 		</div>
@@ -150,36 +126,24 @@
 	<input type="text" class="form-control" id="address" name="address" value="${dto.address }">
 	</div>
 	<div class="form-group row">
-		<div class="col-xs-8">
-			<label for="name">상위 B.A 후원자</label>
-			<input type="hidden" class="form-control" id="upper_member" name="upper_member" value="${dto.upper_member }">
-			<input type="text" class="form-control" id="upper_member_name" name="upper_member_name" value="${dto.upper_member_name }">
+		<div class="col-xs-6">
+			<label for="name">소개자</label> <br/> 	${dto.upper_member_name }
 		</div>
-		<div class="col-xs-4">	
-			<label for="name">찾기</label><br/>
-			<input type="button" class="btn" id="btnIDSearch" value="검색">
+		<div class="col-xs-6">	
+			<label for="name">등록일</label> <br/>		${dto.userRegdate }
 		</div>
 	</div>  	
 	<div class="form-group row">
     	<div class="col-xs-6">
-			<label for="name">계약 시작일</label>
-			<input type="text" class="form-control" id="contract_sdate" name="contract_sdate" value="${dto.contract_sdate }">
+			<label for="name">계약 시작일</label> <br/> ${dto.contract_sdate }
 		</div>
 		<div class="col-xs-6">
 			<label for="name">관리 B.A </label> : 
 			<a href="#" id="subMemberList">${dto.sub_member_cnt} 명</a>
 		</div>
 	</div>
-    <c:choose>
-	    <c:when test="${dto.status == '요청'}">
-	    <button type="button" class="btn btn-success" id="btnAgree">가입 승인</button>
-	    <button type="button" class="btn btn-warning" id="btnDeny">가입 거절</button>
-	    </c:when>
-	<c:otherwise>
-	  <button type="button" class="btn btn-primary" id="btnUpdete">회원 수정</button>
-	  <button type="button" class="btn btn-danger" id="btnDelete">회원 삭제</button>
-	</c:otherwise>
-    </c:choose>
+		
+	  <button type="button" class="btn btn-primary" id="btnUpdete">회원 정보 수정</button>
 </form>     
 
     

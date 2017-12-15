@@ -148,4 +148,18 @@ public class MemberController {
         mav.setViewName("member/subMemberList");
         return mav;
     }
+	
+	// 12. 내 정보 보기
+	@RequestMapping(value="myInfo.do", method=RequestMethod.GET)
+    public ModelAndView myInfo(HttpSession session){
+		ModelAndView mav = new ModelAndView();
+		// 뷰의 이름
+		mav.setViewName("member/myInfo");
+		
+		String userid = session.getAttribute("userId").toString();
+		// 뷰에 전달할 데이터
+		mav.addObject("dto", memberService.read(userid));
+		logger.info("mav:", mav);
+		return mav;
+    }
 }

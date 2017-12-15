@@ -1,22 +1,29 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link href="resources/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-<title>회원 관리</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>회원 목록</title>
 <%@ include file="../include/header.jsp" %>
 </head>
-<div class="jumbotron">
 <body>
+
 <%@ include file="../include/menu.jsp" %>
-	<div class="container-fluid">
-		<div class="page-header">
-			<h1>
-				회원 관리</small>
-			</h1>
-		</div>
-		<div class="row">
-			<div class="col-md-12">
-				<div class="panel panel-default">
+
+<div class="container-fluid text-center">    
+  <div class="row content">
+    <div class="col-sm-2 sidenav">
+      <p><a href="#">Link</a></p>
+      <p><a href="#">Link</a></p>
+      <p><a href="#">Link</a></p>
+    </div>
+    <div class="col-sm-8 text-left"> 
+				
+<h1>
+	<small>회원 목록</small>
+</h1>				
+<p>
 					
 	<table class="table table-striped" >
 		<tr>
@@ -38,9 +45,20 @@
     </table>
     
    			 </div>
-		</div>
-	</div>
+    <div class="col-sm-2 sidenav">
+      <div class="well">
+        <p>ADS</p>
+      </div>
+      <div class="well">
+        <p>ADS</p>
+      </div>
     </div>
-</body>
+  </div>
 </div>
+
+<footer class="container-fluid text-center">
+  <p>Footer Text</p>
+</footer>
+
+</body>
 </html>
