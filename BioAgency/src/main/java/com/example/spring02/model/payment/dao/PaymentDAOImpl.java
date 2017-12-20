@@ -20,8 +20,8 @@ public class PaymentDAOImpl implements PaymentDAO {
 	public void insertPayment(PaymentVO vo) {
 		sqlSession.insert("payment.insertPayment", vo);
 	}
-	public List<PaymentVO> selectAll() {
-		return sqlSession.selectList("payment.selectAll"); 
+	public List<PaymentVO> selectAll(String user_id) {
+		return sqlSession.selectList("payment.selectAll", user_id); 
 	}
 	public PaymentVO detailView(int seq) {
 		return sqlSession.selectOne("payment.detailView", seq);
@@ -68,5 +68,22 @@ public class PaymentDAOImpl implements PaymentDAO {
 		}else {
 			return sqlSession.selectList("payment.selectSales3", user_id);
 		}
+	}
+	@Override
+	public List<PaymentVO> paymentList() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("payment.paymentList");
+	}
+	
+	@Override
+	public void completePayment(PaymentVO vo) { 
+		// TODO Auto-generated method stub
+		sqlSession.update("payment.completePayment", vo);
+	}
+	
+	@Override
+	public void completeSales(PaymentVO vo) {
+		// TODO Auto-generated method stub
+		sqlSession.update("payment.completeSales", vo);
 	}
 }

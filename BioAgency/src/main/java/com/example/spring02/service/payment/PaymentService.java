@@ -19,4 +19,7 @@ public interface PaymentService {
 	public int sumEtc(HttpSession session);
 	public List<PaymentVO> selectPayment(HttpSession session);
 	public List<SalesVO> selectSales(HttpSession session, int pid);
+	public List<PaymentVO> paymentList();
+	public void completePayment(PaymentVO vo);
+	public void completeSales(PaymentVO vo);
 }

@@ -8,7 +8,7 @@ import com.example.spring02.model.sales.dto.SalesVO;
 public interface PaymentDAO {
 
 	public void insertPayment(PaymentVO vo);
-	public List<PaymentVO> selectAll();
+	public List<PaymentVO> selectAll(String userId);
 	public PaymentVO detailView(int seq);
 	public void deletePayment(int seq);
 	public void updatePayment(PaymentVO vo);
@@ -18,4 +18,7 @@ public interface PaymentDAO {
 	public int sumEtc(String user_id);
 	public List<PaymentVO> selectPayment(String user_id);
 	public List<SalesVO> selectSales(String user_id, int pid);
+	public List<PaymentVO> paymentList();
+	public void completePayment(PaymentVO vo);
+	public void completeSales(PaymentVO vo);
 }

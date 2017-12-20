@@ -1,5 +1,7 @@
 package com.example.spring02.controller.payment;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,17 +9,24 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.spring02.model.board.dto.ReplyVO;
 import com.example.spring02.model.payment.dto.PaymentVO;
 import com.example.spring02.model.sales.dto.SalesVO;
+import com.example.spring02.service.board.ReplyPager;
 import com.example.spring02.service.payment.PaymentService;
 
 
@@ -51,17 +60,6 @@ public class PaymentController {
 		return mav; // list.jsp로 List가 전달된다.
     }	
 	
-	/*public ModelAndView list(HttpSession session){
-		List<PaymentVO> list = paymentService.list(session);
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("list", list); // list
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("map", map);
-        mav.setViewName("payment/list");
-        return mav;
-    }	
-	*/
-	
 	// 02. 수당 상세 보기
 	@RequestMapping(value="detail.do", method=RequestMethod.GET)
     public ModelAndView detail(@RequestParam int seq, HttpSession session){
@@ -89,14 +87,44 @@ public class PaymentController {
 		return "redirect:list.do";
 	}
 	
-	//05. 수당  등록 처리
-	/*@RequestMapping("insert.do")
-	public String insert(@ModelAttribute PaymentVO vo) throws Exception{
-		paymentService.insert(vo);
-		return "redirect:list.do";
-	}*/
+	//05. 달력
+	@RequestMapping("calendar.do")
+	public ModelAndView json_get(HttpSession session) throws Exception{
+		
+		ModelAndView modelAndView=new ModelAndView();
+				
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy,MM,dd");
+		List<PaymentVO> list = paymentService.list(session);
+		modelAndView.addObject("list", list);
+		modelAndView.setViewName("/payment/calendar");;
+		
+		System.out.println(" 리스트 사이즈  : " + list.size());
+		
+		String str ="[";
+		//str +="['지급일' , '금액'] ,";
+		int num =0;
+		for(PaymentVO  dto : list){
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(dto.getAmount_date());
+			cal.add(Calendar.MONTH, -1);
+			
+			str +="[new Date(";
+			str += sf.format(cal.getTime());
+			str +=") , ";
+			str += dto.getPayment_amount();
+			str +=" ]";
+			
+			num ++;
+			if(num<list.size()){
+				str +=",";
+			}		
+		}
+		str += "]";
+		modelAndView.addObject("str", str);
+		return modelAndView;				
+	}
 	
-	// 01. 수당 목록
+	// 06. 수당 목록
 	@RequestMapping(value="detailList.do", method=RequestMethod.GET)
     public ModelAndView detailList(@RequestParam int pid, HttpSession session){
 		ModelAndView mav = new ModelAndView();
@@ -120,4 +148,30 @@ public class PaymentController {
         mav.setViewName("payment/detailList");
         return mav;
     }
+	
+	// 07. 수당 지급  목록
+	@RequestMapping("listPayment.do")
+    public ModelAndView listPayment(HttpSession session){
+		ModelAndView mav = new ModelAndView();
+				
+		List<PaymentVO> Plist = null;
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		Plist = paymentService.paymentList();
+		map.put("list", Plist); // list
+
+        mav.addObject("map", map);
+        mav.setViewName("payment/listPayment");
+        return mav;
+    }
+	
+	// 08. 수당 지급 처리
+	@RequestMapping("paymentComplete.do")
+	public String paymentComplete(@ModelAttribute PaymentVO vo) throws Exception{
+		
+		paymentService.completePayment(vo);
+		paymentService.completeSales(vo);
+		
+		return "redirect:listPayment.do";
+	}
 }

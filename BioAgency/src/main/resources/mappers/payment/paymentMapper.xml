@@ -30,7 +30,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         delete from payment where seq = #{seq}
     </delete>
     <select id="selectAll" resultType="com.example.spring02.model.payment.dto.PaymentVO">
-        select * from payment
+    	select p.amount_date, sum(p.payment_amount) as payment_amount from
+		(select amount_date, sum(payment_amount) as payment_amount from payment where member_id=#{userId} group by amount_date
+    	union all
+		select expected_date as amount_date, sum(payment_amount) as payment_amount from sales where sales_member=#{userId} group by expected_date
+		) p group by amount_date
     </select>
     <select id="detailView" resultType="com.example.spring02.model.payment.dto.PaymentVO">
 		SELECT 
@@ -46,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			s.sales_member = #{userId} and pid = 1
 	</select>
 	<select id="sumSales" resultType="int">
-		select 
+		select
 			IFNULL(sum(s.payment_amount),0) as cnt
 		from sales s 
 		where 
@@ -85,4 +89,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 where member_id =  #{userId}
 		 and s.seq = p.sales_seq
     </select>
+    <select id="paymentList" resultType="com.example.spring02.model.payment.dto.PaymentVO">
+		select p.amount_date, sum(p.payment_amount) as payment_amount, p.member_id, m.account, m.name as member_name from
+		(
+		select amount_date, sum(payment_amount) as payment_amount, member_id from payment where status in ('구매') group by amount_date, member_id
+		union all
+		select expected_date as amount_date, sum(payment_amount) as payment_amount, sales_member as member_id from sales where status in ('구매') group by expected_date, sales_member
+		) p, member m where p.member_id = m.userid group by p.amount_date, p.member_id, m.account, m.name    
+	</select>
+	<update id="completePayment" >
+        update payment set         
+         status='지급완료', updatedate = now()
+        where amount_date=STR_TO_DATE (#{amount_date}, '%Y-%m-%d') and member_id = #{member_id} 
+    </update>   
+    <update id="completeSales" >
+        update sales set         
+         status='지급완료', updatedate = now()
+        where expected_date=STR_TO_DATE (#{amount_date}, '%Y-%m-%d') and sales_member = #{member_id}
+    </update>   
 </mapper>

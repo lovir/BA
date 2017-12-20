@@ -22,7 +22,8 @@ public class PaymentServiceImpl implements PaymentService {
 		@Override
 		public List<PaymentVO> list(HttpSession session) {
 			
-			return paymentDao.selectAll();
+			String userId = session.getAttribute("userId").toString();
+			return paymentDao.selectAll(userId);
 
 		}
 		
@@ -82,5 +83,23 @@ public class PaymentServiceImpl implements PaymentService {
 			// TODO Auto-generated method stub
 			String userId = session.getAttribute("userId").toString();
 			return paymentDao.selectSales(userId, pid) ;
+		}
+
+		@Override
+		public List<PaymentVO> paymentList() {
+			// TODO Auto-generated method stub
+			return paymentDao.paymentList() ;
+		}
+
+		@Override
+		public void completePayment(PaymentVO vo) {
+			// TODO Auto-generated method stub
+			paymentDao.completePayment(vo);
+		}
+
+		@Override
+		public void completeSales(PaymentVO vo) {
+			// TODO Auto-generated method stub
+			paymentDao.completeSales(vo);
 		}
 }
