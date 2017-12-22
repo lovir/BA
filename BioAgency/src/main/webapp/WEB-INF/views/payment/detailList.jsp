@@ -14,11 +14,8 @@
 
 <div class="container-fluid text-center">    
   <div class="row content">
-    <div class="col-sm-2 sidenav">
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-    </div>
+<%@ include file="../include/left.jsp" %>
+
     <div class="col-sm-8 text-left"> 
 <p>				
 	<c:choose>
@@ -40,7 +37,7 @@
 	    <tr>
 	    		<td>${sales.seq}</a></td>	
 				<td>${sales.purchase_name}</a></td>
-	        	<td>${sales.payment_amount}</td>
+	        	<td align="right"><fmt:formatNumber value="${sales.payment_amount}" pattern="#,###" /></td>
 	        	<td>${sales.purchase_date}</td>
 	        	<td>${sales.expected_date}</td>
 	        	<td>${sales.status}</td>
@@ -150,20 +147,12 @@
 </h1>				
 		
 	</div>
-    <div class="col-sm-2 sidenav">
-      <div class="well">
-        <p>ADS</p>
-      </div>
-      <div class="well">
-        <p>ADS</p>
-      </div>
-    </div>
+    <%@ include file="../include/right.jsp" %>       
+    
   </div>
 </div>
 
-<footer class="container-fluid text-center">
-  <p>Footer Text</p>
-</footer>
+<%@ include file="../include/footer.jsp" %>       
 
 </body>
 </html>

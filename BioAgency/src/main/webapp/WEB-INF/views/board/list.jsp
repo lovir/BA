@@ -6,6 +6,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>회원 정보 보기</title>
 <%@ include file="../include/header.jsp" %>
+<script>
+	$(document).ready(function(){
+		$("#btnWrite").click(function(){
+			// 페이지 주소 변경(이동)
+			location.href = "${path}/board/write.do";
+		});
+	});
+	// 원하는 페이지로 이동시 검색조건, 키워드 값을 유지하기 위해 
+	function list(page){
+		location.href="${path}/board/list.do?curPage="+page+"&searchOption-${map.searchOption}"+"&keyword=${map.keyword}";
+	}
+</script>
 </head>
 
 <body>
@@ -14,11 +26,8 @@
 
 <div class="container-fluid text-center">    
   <div class="row content">
-    <div class="col-sm-2 sidenav">
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-    </div>
+<%@ include file="../include/left.jsp" %>
+
     <div class="col-sm-8 text-left"> 
 <p>				
 <h1  style="text-align: center">
@@ -136,25 +145,17 @@
 </p>
 	<c:if test="${sessionScope.userId == 'admin'}">
 	<p style="text-align: right">
-	<button type="button" class="btn" id="btnWrite" onClick="location.href='write.do'">글쓰기</button>
+	<button type="button" class="btn" id="btnWrite">글쓰기</button>
 	</p>
 	</c:if>
 		
 	</div>
-    <div class="col-sm-2 sidenav">
-      <div class="well">
-        <p>ADS</p>
-      </div>
-      <div class="well">
-        <p>ADS</p>
-      </div>
-    </div>
+    <%@ include file="../include/right.jsp" %>       
+    
   </div>
 </div>
 
-<footer class="container-fluid text-center">
-  <p>Footer Text</p>
-</footer>
+<%@ include file="../include/footer.jsp" %>       
 
 </body>
 </html>

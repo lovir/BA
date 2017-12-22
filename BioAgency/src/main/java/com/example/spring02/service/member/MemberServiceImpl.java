@@ -55,10 +55,10 @@ public class MemberServiceImpl implements MemberService {
 	
 	// 04. 회원 리스트 보기
 	@Override
-	public List<MemberVO> list(HttpSession session) {
+	public List<MemberVO> list(int start, int end, String status) {
 	 //if(vo.getUserPw().equals(params.get("pwd_CHECK")))
      //   {
-		return memberDao.selectAll();
+		return memberDao.selectAll(start, end, status);
       //  }
 	//	return result;
 	}
@@ -87,6 +87,16 @@ public class MemberServiceImpl implements MemberService {
 	public List<MemberVO> subMemberList(String userid) {
 		// TODO Auto-generated method stub
 		return memberDao.subMemberList(userid);
+	}
+	@Override
+	public List<MemberVO> orgList(HttpSession session) {
+		// TODO Auto-generated method stub
+		return memberDao.orgList();
+	}
+	@Override
+	public int countMember(String status) {
+		// TODO Auto-generated method stub
+		return memberDao.countMember(status);
 	}
 	
 }

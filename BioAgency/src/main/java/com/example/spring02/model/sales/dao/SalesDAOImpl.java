@@ -1,6 +1,8 @@
 package com.example.spring02.model.sales.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -19,8 +21,12 @@ public class SalesDAOImpl implements SalesDAO {
 	public void insertSales(SalesVO vo) {
 		sqlSession.insert("sales.insertSales", vo);
 	}
-	public List<SalesVO> selectAll() {
-		return sqlSession.selectList("sales.selectAll"); 
+	public List<SalesVO> selectAll(int start, int end) {
+		// 검색옵션, 키워드 맵에 저장
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("start", start);
+		map.put("end", end);
+		return sqlSession.selectList("sales.selectAll", map); 
 	}
 	public SalesVO detailView(int seq) {
 		return sqlSession.selectOne("sales.detailView", seq);
@@ -60,5 +66,10 @@ public class SalesDAOImpl implements SalesDAO {
 	public void updatePaymentTec(SalesVO vo) {
 		// TODO Auto-generated method stub
 		sqlSession.update("sales.updatePaymentEtc", vo);
+	}
+	@Override
+	public int countSales() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("sales.countSales");
 	}
 }

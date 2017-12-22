@@ -2,6 +2,7 @@ package com.example.spring02.model.member.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -43,8 +44,13 @@ public class MemberDAOImpl implements MemberDAO {
 	
 	// 04. 회원 관리
 	@Override
-	public List<MemberVO> selectAll(){
-		return sqlSession.selectList("member.selectAll"); 
+	public List<MemberVO> selectAll(int start, int end, String status){
+		// 검색옵션, 키워드 맵에 저장
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("status", status);
+		return sqlSession.selectList("member.selectAll", map); 
 	}
 	@Override
 	public MemberVO detailView(String userid) {
@@ -70,5 +76,17 @@ public class MemberDAOImpl implements MemberDAO {
 	public List<MemberVO> subMemberList(String userid) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("member.subMemberList", userid); 
+	}
+	@Override
+	public List<MemberVO> orgList() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("member.orgList"); 
+	}
+	@Override
+	public int countMember(String status) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("status", status);
+		return sqlSession.selectOne("member.countMember", map);
 	}
 }

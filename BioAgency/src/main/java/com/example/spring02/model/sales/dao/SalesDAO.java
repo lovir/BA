@@ -7,7 +7,7 @@ import com.example.spring02.model.sales.dto.SalesVO;
 public interface SalesDAO {
 
 	public void insertSales(SalesVO vo);
-	public List<SalesVO> selectAll();
+	public List<SalesVO> selectAll(int start, int end);
 	public SalesVO detailView(int seq);
 	public void deleteSales(int seq);
 	public void updateSales(SalesVO vo);
@@ -17,4 +17,5 @@ public interface SalesDAO {
 	public void insertPaymentEtc(SalesVO vo);
 	public void updateSalesEtc(SalesVO vo);
 	public void updatePaymentTec(SalesVO vo);
+	public int countSales();
 }

@@ -8,12 +8,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 페이징 sql -->
 	<sql id="pagingHeader">
-		SELECT * FROM (
-			SELECT ROW_NUMBER() OVER (ORDER BY seq ASC) AS rn, A.* FROM (
+		SELECT b.* FROM (
+			select A.ROWNUM rn, A.* FROM (
 	</sql>
 	<sql id="pagingFooter">
 			) A
-		) WHERE rn BETWEEN #{start} AND #{end}
+		) b WHERE rn BETWEEN #{start} AND #{end}
 	</sql>
 	
 	<insert id="insertSales">
@@ -80,8 +80,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         delete from sales where seq = #{seq}
     </delete>
     <select id="selectAll" resultType="com.example.spring02.model.sales.dto.SalesVO">
-        select *, (select product_name from product p where s.pid=p.pid) as product_name from sales s
+    	 <!-- 페이징 -->
+    	 <include refid="pagingHeader"></include>
+        select 
+	        @ROWNUM := @ROWNUM + 1 AS ROWNUM, s.*, 
+	        (select product_name from product p where s.pid=p.pid) as product_name
+	    from sales s, (SELECT @ROWNUM := 0) R
+        <!-- 페이징 -->
+		<include refid="pagingFooter"></include>	
     </select>
+    <!-- 02_02. 레코드 갯수 -->
+	<select id="countSales" resultType="int">
+		SELECT COUNT(*) 
+		FROM 
+			sales
+	</select>
     <select id="detailView" resultType="com.example.spring02.model.sales.dto.SalesVO">
 		SELECT 
 			 s.*,

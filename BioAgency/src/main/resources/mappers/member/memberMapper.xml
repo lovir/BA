@@ -6,6 +6,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
 <mapper namespace="member">
 	
+	<!-- 페이징 sql -->
+	<sql id="pagingHeader">
+		SELECT b.* FROM (
+			select A.ROWNUM rn, A.* FROM (
+	</sql>
+	
+	<sql id="pagingFooter">
+			) A
+		) b WHERE rn BETWEEN #{start} AND #{end}
+	</sql>
+	
+	<sql id="searchOption">
+		<choose> 
+			<!-- 검색옵션이 전체 검색일 경우 -->
+			<when test="status == ''">
+				WHERE 
+					1=1
+			</when>
+			<otherwise>
+				WHERE 
+					status = #{status}
+			</otherwise>
+		</choose>
+	</sql>
+	
 	<select id="loginCheck" resultType="String">
 		SELECT status AS status FROM member
 		WHERE userid = #{userId} AND pwd = #{userPw}
@@ -29,15 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM member m
 		WHERE userid = #{userId} 
 	</select>
-	<!-- 페이징 sql -->
-	<sql id="pagingHeader">
-		SELECT * FROM (
-			SELECT ROW_NUMBER() OVER (ORDER BY userid ASC) AS rn, A.* FROM (
-	</sql>
-	<sql id="pagingFooter">
-			) A
-		) WHERE rn BETWEEN #{start} AND #{end}
-	</sql>
+	
 	
 	<insert id="insertMember">
         insert into member (name, userid, pwd, phone, upper_member, status, regdate) values
@@ -53,15 +70,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <delete id="deleteMember">
         delete from member where userid = #{userid}
     </delete>
+    
     <select id="selectAll" resultType="com.example.spring02.model.member.dto.MemberVO">
-        select name AS userName,
-			userid AS userId,
-			email AS userEmail,
-			regdate AS userRegdate,
-			status,
-			phone
-		 from member
+    	 <!-- 페이징 -->
+    	 <include refid="pagingHeader"></include>
+    	 select 
+    	  	@ROWNUM := @ROWNUM + 1 AS ROWNUM, 
+    	 	m.name AS userName,
+			m.userid AS userId,
+			m.email AS userEmail,
+			m.regdate AS userRegdate,
+			m.status,
+			m.phone
+		 from member m, (SELECT @ROWNUM := 0) R
+		 <include refid="searchOption"></include>
+        <!-- 페이징 -->
+		<include refid="pagingFooter"></include>	
     </select>
+    <!-- 02_02. 레코드 갯수 -->
+	<select id="countMember" resultType="int">
+		SELECT COUNT(*) 
+		FROM
+			member m
+		<include refid="searchOption"></include>
+	</select>
+	
     <select id="detailView" resultType="com.example.spring02.model.member.dto.MemberVO">
 		SELECT 
 			name AS userName,
@@ -81,7 +114,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE userid = #{userid} 
 	</select>
 	<select id="search" resultType="com.example.spring02.model.member.dto.MemberVO">
-        select name AS userName,
+        select name AS userName, 
 			userid AS userId,
 			email AS userEmail,
 			regdate AS userRegdate,
@@ -90,7 +123,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			upper_member,
 			(select name from member a where a.userid = m.upper_member) as upper_member_name
 		 from member m
-		 where name like CONCAT('%',#{name},'%')
+		 where name like CONCAT('%',#{name},'%') and status='회원'
     </select>
     <select id="subMemberList" resultType="com.example.spring02.model.member.dto.MemberVO">
         select name AS userName,
@@ -103,4 +136,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 from member
 		 where upper_member = #{userid} 
     </select>
+    <select id="orgList" resultType="com.example.spring02.model.member.dto.MemberVO">
+    	select name AS userName, 
+    	userid AS userId, 
+    	upper_member, 
+    	(select name from member b where a.upper_member=b.userid limit 1) upper_member_name 
+    	from member a where status='회원'
+   	</select>
 </mapper>

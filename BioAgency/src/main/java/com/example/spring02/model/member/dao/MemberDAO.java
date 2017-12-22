@@ -15,10 +15,12 @@ public interface MemberDAO {
 	// 02. 회원 로그아웃
 	public void logout(HttpSession session);
 	public void insertMember(MemberVO vo);
-	public List<MemberVO> selectAll();
 	public MemberVO detailView(String userid);
 	public void deleteMember(String userid);
 	public void updateMember(MemberVO vo);
 	public List<MemberVO> search(String name);
 	public List<MemberVO> subMemberList(String userid);
+	public List<MemberVO> orgList();
+	public int countMember(String status);
+	public List<MemberVO> selectAll(int start, int end, String status);
 }

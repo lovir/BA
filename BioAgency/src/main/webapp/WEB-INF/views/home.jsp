@@ -4,6 +4,9 @@
 <link href="resources/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 	<title>Home</title>
 <%@ include file="include/header.jsp" %>
+<script>
+location.href='${path}/board/list.do';
+</script>
 </head>
 <div class="jumbotron">
 <body>

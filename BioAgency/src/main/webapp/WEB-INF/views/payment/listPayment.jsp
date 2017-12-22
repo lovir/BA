@@ -36,7 +36,7 @@
 	    <c:forEach var="payment" items="${map.list}">
 	    <tr>
         	<td>${payment.amount_date}</td>
-        	<td>${payment.payment_amount} 원</td>
+        	<td align="right"><fmt:formatNumber value="${payment.payment_amount}" pattern="#,###" /> 원</td>
         	<td>${payment.member_name} (${payment.member_id})</td>
         	<td>${payment.account}</td>
         	<td><button type="button" class="btn" onClick="location.href='paymentComplete.do?member_id=${payment.member_id}&amount_date=${payment.amount_date}'">수당 지급</button></td>

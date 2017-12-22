@@ -37,11 +37,8 @@
 
 <div class="container-fluid text-center">    
   <div class="row content">
-    <div class="col-sm-2 sidenav">
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-    </div>
+<%@ include file="../include/left.jsp" %>
+
     <div class="col-sm-8 text-left"> 
 <p>				
 <h1  style="text-align: center">
@@ -54,47 +51,39 @@
 	<table class="table table-striped" >
 		<tr>
 			<td>가입 수당</td>
-			<td>${map.sumRegist} 원</td>
+			<td><fmt:formatNumber value="${map.sumRegist}" pattern="#,###" /> 원</td>
 			<td><button type="button" class="btn btn-primary" id="btnDetailList1">상세 내역</button></td>
 		</tr>
 		<tr>
 			<td>매출 수당</td>
-			<td>${map.sumSales} 원</td>
+			<td><fmt:formatNumber value="${map.sumSales}" pattern="#,###" /> 원</td>
 			<td><button type="button" class="btn btn-primary" id="btnDetailList2">상세 내역</button></td>
 		</tr>
 		<tr>
 			<td>B.A 관리비</td>
-			<td>${map.sumPayment} 원</td>
+			<td><fmt:formatNumber value="${map.sumPayment}" pattern="#,###" /> 원</td>
 			<td><button type="button" class="btn btn-primary" id="btnDetailList4">상세 내역</button></td>
 		</tr>
 		<tr>
 			<td>기타 수당</td>
-			<td>${map.sumEtc} 원</td>
+			<td><fmt:formatNumber value="${map.sumEtc}" pattern="#,###" /> 원</td>
 			<td><button type="button" class="btn btn-primary" id="btnDetailList3">상세 내역</button></td>
 		</tr>
 		<tr>
 			<td>합계</td>
-			<td>${map.sumTotal} 원</td>
+			<td><fmt:formatNumber value="${map.sumTotal}" pattern="#,###" /> 원</td>
 			<td></td>
 		</tr>
 	</table>
    			 </p>
    			 	
 	</div>
-    <div class="col-sm-2 sidenav">
-      <div class="well">
-        <p>ADS</p>
-      </div>
-      <div class="well">
-        <p>ADS</p>
-      </div>
-    </div>
+    <%@ include file="../include/right.jsp" %>       
+    
   </div>
 </div>
 
-<footer class="container-fluid text-center">
-  <p>Footer Text</p>
-</footer>
+<%@ include file="../include/footer.jsp" %>       
 
 </body>
 </html>

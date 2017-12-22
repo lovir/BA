@@ -19,10 +19,10 @@ public class SalesServiceImpl implements SalesService {
 
 		// 01. 리스트 보기
 		@Override
-		public List<SalesVO> list(HttpSession session) {
+		public List<SalesVO> list(int start, int end) {
 
 			
-			return salesDao.selectAll();
+			return salesDao.selectAll(start, end);
 
 		}
 		
@@ -62,5 +62,11 @@ public class SalesServiceImpl implements SalesService {
 			// TODO Auto-generated method stub
 			salesDao.updateSalesEtc(vo);
 			salesDao.updatePaymentTec(vo);
+		}
+
+		@Override
+		public int countSales() {
+			// TODO Auto-generated method stub
+			return salesDao.countSales();
 		}
 }

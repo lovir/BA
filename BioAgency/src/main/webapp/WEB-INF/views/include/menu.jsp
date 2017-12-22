@@ -14,13 +14,28 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li><a href="${path}/member/list.do">회원관리</a></li>
-        <li><a href="${path}/board/list.do">게시판</a></li>
-        <li><a href="${path}/member/myInfo.do">내 정보 보기</a></li>        
-        <li><a href="${path}/payment/list.do">수당</a></li>
-        <li><a href="${path}/sales/list.do">매출관리</a></li>
-        <li><a href="${path}/payment/calendar.do">B.A 달력</a></li>
-         <li><a href="${path}/payment/listPayment.do">수당 지급 목록</a></li>
+        
+        
+	<c:choose>
+      	<c:when test="${sessionScope.userId == 'admin'}">
+	      
+       		<li><a href="${path}/board/list.do">공지사항</a></li>
+	        <li><a href="${path}/member/list.do">회원관리</a></li>
+	        <li><a href="${path}/sales/list.do">매출관리</a></li>
+	        <li><a href="${path}/payment/listPayment.do">수당 지급 목록</a></li>
+	        
+        </c:when>
+		<c:otherwise>	
+			<c:choose>
+			<c:when test="${sessionScope.userId != null}">
+				<li><a href="${path}/board/list.do">공지사항</a></li>
+		        <li><a href="${path}/member/myInfo.do">내 정보 보기</a></li>        
+		        <li><a href="${path}/payment/list.do">수당 내역</a></li>
+		        <li><a href="${path}/payment/calendar.do">B.A 달력</a></li>
+	        </c:when>
+	        </c:choose>	        
+		</c:otherwise>
+	</c:choose>	        
       </ul>
       <ul class="nav navbar-nav navbar-right">
 <c:choose>

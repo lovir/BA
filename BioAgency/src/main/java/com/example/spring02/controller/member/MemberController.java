@@ -1,5 +1,6 @@
 package com.example.spring02.controller.member;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.spring02.model.board.dto.BoardVO;
 import com.example.spring02.model.member.dto.MemberVO;
+import com.example.spring02.model.payment.dto.PaymentVO;
+import com.example.spring02.service.board.BoardPager;
 import com.example.spring02.service.member.MemberService;
 
 
@@ -88,10 +91,21 @@ public class MemberController {
 	
 	// 06. 회원 목록
 	@RequestMapping("list.do")
-    public ModelAndView list(HttpSession session){
-		List<MemberVO> list = memberService.list(session);
+    public ModelAndView list(@RequestParam(defaultValue="1") int curPage, @RequestParam(defaultValue="") String status){
+		// 레코드의 갯수 계산
+		//if (status.equals("request")) status = "요청";
+		
+		int count = memberService.countMember(status);
+		// 페이지 나누기 관련 처리
+		BoardPager boardPager = new BoardPager(count, curPage);
+		int start = boardPager.getPageBegin();
+		int end = boardPager.getPageEnd();
+				
+		List<MemberVO> list = memberService.list(start, end, status);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list); // list
+		map.put("status", status);
+		map.put("boardPager", boardPager);		
         ModelAndView mav = new ModelAndView();
         mav.addObject("map", map);
         mav.setViewName("member/list");
@@ -162,4 +176,44 @@ public class MemberController {
 		logger.info("mav:", mav);
 		return mav;
     }
+	
+	// 13. 호원  계보 
+	@RequestMapping("org.do")
+	public ModelAndView org(HttpSession session){
+		ModelAndView mav = new ModelAndView();
+		
+		List<MemberVO> list = null;
+
+		list = memberService.orgList(session);
+		
+		System.out.println(" 리스트 사이즈  : " + list.size());
+		
+		String str ="";
+		//str +="['지급일' , '금액', ''] ,";
+		int num =0;
+		for(MemberVO  dto : list){
+			str +="['";
+			str += dto.getUserName();
+			str += "(" +dto.getUserId()+ ")";
+			str +="' , '";
+			if (dto.getUpper_member() != null && !dto.getUpper_member().equals("null") && !dto.getUpper_member().equals("") ) {
+				str += dto.getUpper_member_name();
+				str += "(" +dto.getUpper_member()+ ")";
+			} else {
+				//str += "BioAgency";
+			}
+			str +="' , ";
+			str += "''";
+			str +=" ]";
+			
+			num ++;
+			if(num<list.size()){
+				str +=",";
+			}		
+		}
+		str += "";
+		mav.addObject("str", str);
+        mav.setViewName("member/org");
+        return mav;
+	}
 }

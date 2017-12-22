@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.spring02.model.member.dto.MemberVO;
 import com.example.spring02.model.sales.dto.SalesVO;
+import com.example.spring02.service.board.BoardPager;
 import com.example.spring02.service.member.MemberService;
 import com.example.spring02.service.sales.SalesService;
 
@@ -36,10 +37,18 @@ public class SalesController {
 	
 	// 01. 수당 목록
 	@RequestMapping("list.do")
-    public ModelAndView list(HttpSession session){
-		List<SalesVO> list = salesService.list(session);
+    public ModelAndView list(@RequestParam(defaultValue="1") int curPage){
+		// 레코드의 갯수 계산
+		int count = salesService.countSales();
+		// 페이지 나누기 관련 처리
+		BoardPager boardPager = new BoardPager(count, curPage);
+		int start = boardPager.getPageBegin();
+		int end = boardPager.getPageEnd();
+		
+		List<SalesVO> list = salesService.list(start, end);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list); // list
+		map.put("boardPager", boardPager);
         ModelAndView mav = new ModelAndView();
         mav.addObject("map", map);
         mav.setViewName("sales/list");

@@ -16,10 +16,12 @@ public interface MemberService {
 	public void logout(HttpSession session);
 	
 	public void join(MemberVO vo);
-	public List<MemberVO> list(HttpSession session);
+	public List<MemberVO> list(int start, int end, String status);	
 	public Object read(String userid);
 	public void delete(String userid);
 	public void update(MemberVO vo);
 	public List<MemberVO> search(String name);
 	public List<MemberVO> subMemberList(String userid);
+	public List<MemberVO> orgList(HttpSession session);
+	public int countMember(String status);
 }
