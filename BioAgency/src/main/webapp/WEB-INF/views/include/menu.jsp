@@ -10,7 +10,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand" href="/${path}"><img src="../resources/images/logo.jpg" width="100" height="30"></a>
+      <a class="navbar-brand" href="${path}"><img src="../resources/images/logo.jpg" width="100" height="30"></a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
