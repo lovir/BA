@@ -35,8 +35,8 @@
 		</tr>
 	    <c:forEach var="sales" items="${map.list}">
 	    <tr>
-	    		<td>${sales.seq}</a></td>	
-				<td>${sales.purchase_name}</a></td>
+	    		<td>${sales.seq}</td>	
+				<td>${sales.purchase_name}</td>
 	        	<td align="right"><fmt:formatNumber value="${sales.payment_amount}" pattern="#,###" /></td>
 	        	<td>${sales.purchase_date}</td>
 	        	<td>${sales.expected_date}</td>
@@ -64,10 +64,10 @@
 		</tr>
 	    <c:forEach var="sales" items="${map.list}">
 	    <tr>
-	    		<td>${sales.seq}</a></td>	
-				<td>${sales.purchase_name}</a></td>
-				<td>${sales.product_name}</a></td>
-	        	<td>${sales.payment_amount}</td>
+	    		<td>${sales.seq}</td>	
+				<td>${sales.purchase_name}</td>
+				<td>${sales.product_name}</td>
+	        	<td align="right"><fmt:formatNumber value="${sales.payment_amount}" pattern="#,###" /></td>
 	        	<td>${sales.purchase_date}</td>
 	        	<td>${sales.expected_date}</td>
 	        	<td>${sales.status}</td>
@@ -95,11 +95,11 @@
 		</tr>
 	    <c:forEach var="payment" items="${map.list}">
 	    <tr>
-	    		<td>${payment.sales_seq}</a></td>	
-				<td>${payment.sales_member_name}</a></td>
-				<td>${payment.purchase_name}</a></td>
-				<td>${payment.product_name}</a></td>
-	        	<td>${payment.payment_amount}</td>
+	    		<td>${payment.sales_seq}</td>	
+				<td>${payment.sales_member_name}</td>
+				<td>${payment.purchase_name}</td>
+				<td>${payment.product_name}</td>
+	        	<td align="right"><fmt:formatNumber value="${payment.payment_amount}" pattern="#,###" /></td>
 	        	<td>${payment.purchase_date}</td>
 	        	<td>${payment.amount_date}</td>
 	        	<td>${payment.status}</td>
@@ -126,10 +126,10 @@
 		</tr>
 	    <c:forEach var="sales" items="${map.list}">
 	    <tr>
-	    		<td>${sales.seq}</a></td>	
-				<td>${sales.purchase_name}</a></td>
-				<td>${sales.product_name}</a></td>
-	        	<td>${sales.payment_amount}</td>
+	    		<td>${sales.seq}</td>	
+				<td>${sales.purchase_name}</td>
+				<td>${sales.product_name}</td>
+	        	<td align="right"><fmt:formatNumber value="${sales.payment_amount}" pattern="#,###" /></td>
 	        	<td>${sales.purchase_date}</td>
 	        	<td>${sales.expected_date}</td>
 	        	<td>${sales.status}</td>

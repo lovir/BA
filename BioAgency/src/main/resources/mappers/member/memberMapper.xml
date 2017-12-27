@@ -62,8 +62,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
     <update id="updateMember" >
         update member set
-         name = #{userName}, birthdate=#{birthdate}, address = #{address}, account = #{account}, upper_member = #{upper_member},
-         contract_sdate = #{contract_sdate}, email = #{userEmail}, phone = #{phone}, status=#{status},
+         name = #{userName}, birthdate=STR_TO_DATE (#{birthdate}, '%Y-%m-%d'), address = #{address}, account = #{account}, upper_member = #{upper_member},
+         contract_sdate = STR_TO_DATE (#{contract_sdate}, '%Y-%m-%d'), email = #{userEmail}, phone = #{phone}, status=#{status},
          updatedate = now()
         where userid = #{userId}
     </update>    

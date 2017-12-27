@@ -21,14 +21,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         (#{sales_member}, #{pid}, #{purchase_name}, 
         	(select product_price from product where pid=#{pid}),
 			(select payment_amount from product where pid=#{pid}),
-        STR_TO_DATE (#{purchase_date}, '%Y %m %d'), STR_TO_DATE (#{expected_date}, '%Y-%m-%d'),
+        STR_TO_DATE (#{purchase_date}, '%Y-%m-%d'), STR_TO_DATE (#{expected_date}, '%Y-%m-%d'),
         #{upper_member},  #{status}, now())
     </insert> 
     <insert id="insertSalesEtc">
         insert into sales (sales_member, pid, purchase_name, purchase_amount, payment_amount, purchase_date, expected_date, upper_member,  status, regdate) values
         (#{sales_member}, #{pid}, #{purchase_name}, 
          #{purchase_amount}, #{payment_amount}, 
-         STR_TO_DATE (#{purchase_date}, '%Y %m %d'), STR_TO_DATE (#{expected_date}, '%Y-%m-%d'),
+         STR_TO_DATE (#{purchase_date}, '%Y-%m-%d'), STR_TO_DATE (#{expected_date}, '%Y-%m-%d'),
         #{upper_member},  #{status}, now())
     </insert>
     <update id="updateSales" >
@@ -71,7 +71,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
      <update id="updatePaymentEtc" >
         update payment set
-         amount_date=STR_TO_DATE (#{expected_date}, '%Y-%m-%d'), member_id = #{upper_member}, 
+         amount_date=STR_TO_DATE (#{expected_date}, '%Y-%m-%d), member_id = #{upper_member}, 
 			payment_amount = #{payment_amount} * 0.2,
         status=#{status}, updatedate = now()
         where sales_seq = #{seq}
@@ -85,7 +85,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select 
 	        @ROWNUM := @ROWNUM + 1 AS ROWNUM, s.*, 
 	        (select product_name from product p where s.pid=p.pid) as product_name
-	    from sales s, (SELECT @ROWNUM := 0) R
+	    from sales s, (SELECT @ROWNUM := 0) R order by s.seq desc
         <!-- 페이징 -->
 		<include refid="pagingFooter"></include>	
     </select>

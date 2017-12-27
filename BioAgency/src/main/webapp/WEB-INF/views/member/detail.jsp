@@ -119,7 +119,10 @@
 		</div>
 		<div class="col-xs-6">
 			<label for="name">생년 월일</label>
-			<input type="text" class="form-control" id="birthdate" name="birthdate" value="${dto.birthdate }">
+			<!-- <input type="text" class="form-control" id="birthdate" name="birthdate" value="${dto.birthdate }"> -->
+			<div class="input-group date">
+	        <input type="text" class="form-control" id="birthdate" name="birthdate" value="${dto.birthdate }"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+		  	</div>
 		</div>
 	</div>	
 	<div class="form-group row">
@@ -147,12 +150,12 @@
 	<input type="text" class="form-control" id="address" name="address" value="${dto.address }">
 	</div>
 	<div class="form-group row">
-		<div class="col-xs-8">
+		<div class="col-xs-6">
 			<label for="name">상위 B.A 후원자</label>
 			<input type="hidden" class="form-control" id="upper_member" name="upper_member" value="${dto.upper_member }">
 			<input type="text" class="form-control" id="upper_member_name" name="upper_member_name" value="${dto.upper_member_name }">
 		</div>
-		<div class="col-xs-4">	
+		<div class="col-xs-6">	
 			<label for="name">찾기</label><br/>
 			<input type="button" class="btn" id="btnIDSearch" value="검색">
 		</div>
@@ -160,7 +163,10 @@
 	<div class="form-group row">
     	<div class="col-xs-6">
 			<label for="name">계약 시작일</label>
-			<input type="text" class="form-control" id="contract_sdate" name="contract_sdate" value="${dto.contract_sdate }">
+			<!-- <input type="text" class="form-control" id="contract_sdate" name="contract_sdate" value="${dto.contract_sdate }"> -->
+			<div class="input-group date">
+	        <input type="text" class="form-control" id="contract_sdate" name="contract_sdate" value="${dto.contract_sdate }"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+		  	</div>
 		</div>
 		<div class="col-xs-6">
 			<label for="name">관리 B.A </label> : 

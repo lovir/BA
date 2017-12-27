@@ -4,9 +4,12 @@
 <link href="resources/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 	<title>Home</title>
 <%@ include file="include/header.jsp" %>
-<script>
-location.href='${path}/board/list.do';
-</script>
+
+<c:if test="${msg == 'success'}">
+<script>location.href='${path}/board/list.do';</script>
+</c:if>
+<script>location.href='${path}/member/login.do';</script>
+
 </head>
 <div class="jumbotron">
 <body>

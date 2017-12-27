@@ -10,12 +10,26 @@
 <link href="../resources/bower_components/bootstrap/dist/css/bootstrap.min.css"	rel="stylesheet">
 <link href="../resources/bower_components/bootstrap-select/bootstrap-select.min.css"	rel="stylesheet">
 <link href="../resources/bower_components/bootstrapValidator/dist/css/bootstrapValidator.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
 
 <script src="../resources/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="../resources/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="../resources/bower_components/bootstrap-select/bootstrap-select.min.js"></script>
 <script src="../resources/bower_components/bootstrap-paginator/build/bootstrap-paginator.min.js"></script>
 <script src="../resources/bower_components/bootstrapValidator/dist/js/bootstrapValidator.min.js"></script>
+<script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
+<script src="../resources/js/bootstrap-datepicker.kr.js" charset="UTF-8"></script>
+<script type='text/javascript'>
+    $(function(){
+        $('.input-group.date').datepicker({
+            calendarWeeks: false,
+            todayHighlight: true,
+            autoclose: true,
+            format: "yyyy-mm-dd",
+            language: "kr"
+        });
+    });
+</script>
 <style>
     /* Remove the navbar's default margin-bottom and rounded borders */ 
     .navbar {

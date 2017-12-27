@@ -40,28 +40,28 @@ public class SalesServiceImpl implements SalesService {
 		public void update(SalesVO vo) {
 			// TODO Auto-generated method stub
 			salesDao.updateSales(vo);
-			salesDao.updatePayment(vo);
+			if (!vo.getUpper_member().equals("")) salesDao.updatePayment(vo);
 		}
 
 		@Override
 		public void insert(SalesVO vo) {
 			// TODO Auto-generated method stub
 			salesDao.insertSales(vo);
-			salesDao.insertPayment(vo);
+			if (!vo.getUpper_member().equals("")) salesDao.insertPayment(vo);
 		}
 
 		@Override
 		public void insertEtc(SalesVO vo) {
 			// TODO Auto-generated method stub
 			salesDao.insertSalesEtc(vo);
-			salesDao.insertPaymentEtc(vo);
+			if (!vo.getUpper_member().equals("")) salesDao.insertPaymentEtc(vo);
 		}
 
 		@Override
 		public void updateEtc(SalesVO vo) {
 			// TODO Auto-generated method stub
 			salesDao.updateSalesEtc(vo);
-			salesDao.updatePaymentTec(vo);
+			if (!vo.getUpper_member().equals("")) salesDao.updatePaymentTec(vo);
 		}
 
 		@Override

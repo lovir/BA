@@ -65,11 +65,8 @@ $(document).ready(function(){
 
 <div class="container-fluid text-center">    
   <div class="row content">
-    <div class="col-sm-2 sidenav">
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-    </div>
+<%@ include file="../include/left.jsp" %>
+
     <div class="col-sm-8 text-left"> 
 <h1  style="text-align: center">
 	<small>매출 상세 보기</small>
@@ -110,11 +107,17 @@ $(document).ready(function(){
 	<div class="form-group row">
 	  <div class="col-xs-6">
 	    <label for="purchase_date">구매일</label>
-	    <input type="datetime" class="form-control" id="purchase_date" name="purchase_date" value="${dto.purchase_date}">
+	    <!-- <input type="datetime" class="form-control" id="purchase_date" name="purchase_date" value="${dto.purchase_date}"> -->
+	     <div class="input-group date">
+        <input type="text" class="form-control" id="purchase_date" name="purchase_date" value="${dto.purchase_date}"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+	  	</div>
 	  </div>
 	  <div class="col-xs-6">
 	    <label for="expected_date">지급 예상일</label>
-	    <input type="datetime" class="form-control" id="expected_date" name="expected_date" value="${dto.expected_date}">
+	    <!--<input type="datetime" class="form-control" id="expected_date" name="expected_date" value="${dto.expected_date}">  -->
+	    <div class="input-group date">
+        <input type="text" class="form-control" id="expected_date" name="expected_date" value="${dto.expected_date}"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+	  	</div>
 	  </div>
 	</div>	
 	<div class="form-group row">
@@ -151,20 +154,12 @@ $(document).ready(function(){
 
 
 	</div>
-    <div class="col-sm-2 sidenav">
-      <div class="well">
-        <p>ADS</p>
-      </div>
-      <div class="well">
-        <p>ADS</p>
-      </div>
-    </div>
+<%@ include file="../include/right.jsp" %>       
+    
   </div>
 </div>
 
-<footer class="container-fluid text-center">
-  <p>Footer Text</p>
-</footer>
+<%@ include file="../include/footer.jsp" %>       
 
 </body>
-</html>							
+</html>						
