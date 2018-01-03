@@ -24,7 +24,7 @@
 </h1>				
 </p>
 
-<div align="right" ><button type="button" onClick="location.href='listPayment.do?status=구매'">미지급 수당 목록</button></div>
+<div align="right" ><button type="button" onClick="location.href='listPayment2.do?status=구매'">미지급 수당 목록</button></div>
 
 <p>				
 	<table class="table table-striped" >

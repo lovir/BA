@@ -71,13 +71,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			s.member_id = #{userId}
 	</select>
 	<select id="selectSales1" resultType="com.example.spring02.model.sales.dto.SalesVO">
-        select *,(select pr.product_name from product pr where s.pid = pr.pid) as product_name from sales where sales_member = #{userId} and pid in (1)
+        select *,(select pr.product_name from product pr where s.pid = pr.pid) as product_name from sales s where sales_member = #{userId} and pid in (1)
     </select>
 	<select id="selectSales2" resultType="com.example.spring02.model.sales.dto.SalesVO">
         select *,(select pr.product_name from product pr where s.pid = pr.pid) as product_name from sales s where sales_member = #{userId} and pid in (2,3,4,5)
     </select>
 	<select id="selectSales3" resultType="com.example.spring02.model.sales.dto.SalesVO">
-        select *,(select pr.product_name from product pr where s.pid = pr.pid) as product_name from sales where sales_member = #{userId} and pid in (6, 7)
+        select *,(select pr.product_name from product pr where s.pid = pr.pid) as product_name from sales s where sales_member = #{userId} and pid in (6, 7)
     </select>
     <select id="selectPayment" resultType="com.example.spring02.model.payment.dto.PaymentVO">
         select p.*,
@@ -90,13 +90,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 and s.seq = p.sales_seq
     </select>
     <select id="paymentList" resultType="com.example.spring02.model.payment.dto.PaymentVO">
-		select p.amount_date, sum(p.payment_amount) as payment_amount, p.member_id, m.account, m.name as member_name from
-		(
-		select amount_date, sum(payment_amount) as payment_amount, member_id from payment where status in ('구매') group by amount_date, member_id
-		union all
-		select expected_date as amount_date, sum(payment_amount) as payment_amount, sales_member as member_id from sales where status in ('구매') group by expected_date, sales_member
-		) p, member m where p.member_id = m.userid group by p.amount_date, p.member_id, m.account, m.name    
+    	<choose>
+			<!-- 검색옵션이 전체 검색일 경우 -->
+			<when test="strStatus == '구매'">
+			select p.amount_date, sum(p.payment_amount) as payment_amount, p.member_id, m.account, m.name as member_name, p.status from
+			(
+			select amount_date, sum(payment_amount) as payment_amount, member_id, status from payment where status in ('구매') group by amount_date, member_id
+			union all
+			select expected_date as amount_date, sum(payment_amount) as payment_amount, sales_member as member_id, status from sales where status in ('구매') group by expected_date, sales_member
+			) p, member m where p.member_id = m.userid group by p.amount_date, p.member_id, m.account, m.name , p.status  
+			</when>
+			<!-- 전체 검색이 아닐 경우 -->
+			<otherwise>
+			select p.amount_date, sum(p.payment_amount) as payment_amount, p.member_id, m.account, m.name as member_name, p.status from
+			(
+			select amount_date, sum(payment_amount) as payment_amount, member_id, status from payment where status in ('구매','지급완료') group by amount_date, member_id
+			union all
+			select expected_date as amount_date, sum(payment_amount) as payment_amount, sales_member as member_id, status from sales where status in ('구매','지급완료') group by expected_date, sales_member
+			) p, member m where p.member_id = m.userid group by p.amount_date, p.member_id, m.account, m.name , p.status 
+			</otherwise>
+		</choose>
 	</select>
+	<select id="paymentList2" resultType="com.example.spring02.model.payment.dto.PaymentVO">
+    	select amount_date, sum(payment_amount) as payment_amount, member_id, status from payment where status in ('구매','지급완료') group by amount_date, member_id		
+	</select>
+	
 	<update id="completePayment" >
         update payment set         
          status='지급완료', updatedate = now()

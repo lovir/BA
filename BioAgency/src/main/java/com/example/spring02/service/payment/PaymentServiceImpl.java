@@ -86,9 +86,9 @@ public class PaymentServiceImpl implements PaymentService {
 		}
 
 		@Override
-		public List<PaymentVO> paymentList() {
+		public List<PaymentVO> paymentList(String strStatus) {
 			// TODO Auto-generated method stub
-			return paymentDao.paymentList() ;
+			return paymentDao.paymentList(strStatus) ;
 		}
 
 		@Override
@@ -101,5 +101,11 @@ public class PaymentServiceImpl implements PaymentService {
 		public void completeSales(PaymentVO vo) {
 			// TODO Auto-generated method stub
 			paymentDao.completeSales(vo);
+		}
+
+		@Override
+		public List<PaymentVO> paymentList2(String status) {
+			// TODO Auto-generated method stub
+			return paymentDao.paymentList2(status) ;
 		}
 }

@@ -1,6 +1,8 @@
 package com.example.spring02.model.payment.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -70,9 +72,13 @@ public class PaymentDAOImpl implements PaymentDAO {
 		}
 	}
 	@Override
-	public List<PaymentVO> paymentList() {
+	public List<PaymentVO> paymentList(String strStatus) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("payment.paymentList");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("strStatus", strStatus);
+		System.out.println(" ## sqlSession.selectMap(\"payment.paymentList2\", strStatus) " + sqlSession.selectList("payment.paymentList2", map));
+		//return sqlSession.selectList("payment.paymentList2", map);
+		return sqlSession.selectList("sales.paymentList", map);
 	}
 	
 	@Override
@@ -85,5 +91,13 @@ public class PaymentDAOImpl implements PaymentDAO {
 	public void completeSales(PaymentVO vo) {
 		// TODO Auto-generated method stub
 		sqlSession.update("payment.completeSales", vo);
+	}
+	@Override
+	public List<PaymentVO> paymentList2(String strStatus) {
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("strStatus", strStatus);
+		return sqlSession.selectList("payment.paymentList2", map);
 	}
 }

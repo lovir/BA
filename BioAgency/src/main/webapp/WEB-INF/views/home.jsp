@@ -5,7 +5,7 @@
 	<title>Home</title>
 <%@ include file="include/header.jsp" %>
 
-<c:if test="${msg == 'success'}">
+<c:if test="${sessionScope.userId != null}">
 <script>location.href='${path}/board/list.do';</script>
 </c:if>
 <script>location.href='${path}/member/login.do';</script>

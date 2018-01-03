@@ -18,7 +18,8 @@ public interface PaymentDAO {
 	public int sumEtc(String user_id);
 	public List<PaymentVO> selectPayment(String user_id);
 	public List<SalesVO> selectSales(String user_id, int pid);
-	public List<PaymentVO> paymentList();
+	public List<PaymentVO> paymentList(String strStatus);
 	public void completePayment(PaymentVO vo);
 	public void completeSales(PaymentVO vo);
+	public List<PaymentVO> paymentList2(String strStatus);
 }

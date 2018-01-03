@@ -150,18 +150,47 @@ public class PaymentController {
     }
 	
 	// 07. 수당 지급  목록
-	@RequestMapping("listPayment.do")
-    public ModelAndView listPayment(HttpSession session){
+	@RequestMapping(value="listPayment.do", method=RequestMethod.GET)
+    public ModelAndView listPayment(@RequestParam(defaultValue="") String status, HttpSession session){
 		ModelAndView mav = new ModelAndView();
 				
 		List<PaymentVO> Plist = null;
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		Plist = paymentService.paymentList();
+		//System.out.println("### paymentService.paymentList(status) " + paymentService.paymentList(status));
+
+		Plist = paymentService.paymentList(status);
+		//Plist = paymentService.paymentList2(status);
+		
+		//System.out.println("### paymentService.paymentList(status) " + paymentService.paymentList(status));
+		
 		map.put("list", Plist); // list
+
+		System.out.println("### map " + map);
 
         mav.addObject("map", map);
         mav.setViewName("payment/listPayment");
+        return mav;
+    }
+	
+	// 07. 수당 지급  목록
+	@RequestMapping(value="listPayment2.do", method=RequestMethod.GET)
+    public ModelAndView listPayment2(@RequestParam(defaultValue="") String status, HttpSession session){
+		ModelAndView mav = new ModelAndView();
+				
+		List<PaymentVO> Plist = null;
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		Plist = paymentService.paymentList2(status);
+		
+		System.out.println("### Plist2 " + Plist);
+		
+		map.put("list", Plist); // list
+
+		System.out.println("### map2 " + map);
+
+        mav.addObject("map", map);
+        mav.setViewName("payment/listPayment2");
         return mav;
     }
 	
