@@ -9,7 +9,7 @@
 <script>
 	// 원하는 페이지로 이동시 검색조건, 키워드 값을 유지하기 위해 
 	function list(page, status){
-		location.href="${path}/payment/listPayment.do?curPage="+page+"&status=" + status;
+		location.href="${path}/payment/listPayment.do?curPage="+page+"&status=" + encodeURI(status);
 	}
 </script>
 </head>
@@ -34,7 +34,7 @@
      		<div align="right" ><button type="button" onClick="location.href='listPayment.do'">전체 보기</button></div>
      	</c:when>
 	<c:otherwise>
-    	<div align="right" ><button type="button" onClick="location.href='listPayment.do?status=구매'">미지급 수당 목록</button></div>
+    	<div align="right" ><button type="button" onClick="javascrip:list(1, '구매');">미지급 수당 목록</button></div>
 	</c:otherwise>
 </c:choose>
 

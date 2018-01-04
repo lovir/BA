@@ -9,7 +9,7 @@
 <script>
 	// 원하는 페이지로 이동시 검색조건, 키워드 값을 유지하기 위해 
 	function list(page, status){
-		location.href="${path}/member/list.do?curPage="+page+"&status=" + status;
+		location.href="${path}/member/list.do?curPage="+page+"&status=" + encodeURI(status);
 	}
 </script>
 </head>
@@ -32,7 +32,7 @@
      		<div align="right" ><button type="button" onClick="location.href='list.do'">전체 보기</button>
      	</c:when>
 	<c:otherwise>
-    	<div align="right" ><button type="button" onClick="location.href='list.do?status=요청&curPage=${map.boardPager.curPage}'">가입 요청 회원만 보기</button> 
+    	<div align="right" ><button type="button" onClick="javascrip:list(1, '요청');">가입 요청 회원만 보기</button> 
 	</c:otherwise>
 </c:choose>
 	<button type="button" onClick="location.href='org.do'">회원 전체 계보도</button></div>
