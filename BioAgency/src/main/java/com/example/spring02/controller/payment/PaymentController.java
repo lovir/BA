@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.spring02.model.board.dto.ReplyVO;
 import com.example.spring02.model.payment.dto.PaymentVO;
 import com.example.spring02.model.sales.dto.SalesVO;
+import com.example.spring02.service.board.BoardPager;
 import com.example.spring02.service.board.ReplyPager;
 import com.example.spring02.service.payment.PaymentService;
 
@@ -42,18 +43,20 @@ public class PaymentController {
 	// 01. 수당 목록
 	@RequestMapping("list.do")
     public ModelAndView list(HttpSession session){
-		int sumRegist = paymentService.sumRegist(session);
-		int sumSales = paymentService.sumSales(session);
-		int sumPayment = paymentService.sumPayment(session);
-		int sumEtc = paymentService.sumEtc(session);
+//		int sumRegist = paymentService.sumRegist(session);
+		List<HashMap> Rlist = paymentService.sumRegist(session);
+		List<HashMap> Slist = paymentService.sumSales(session);
+		List<HashMap> Plist = paymentService.sumPayment(session);
+		List<HashMap> Elist = paymentService.sumEtc(session);
 		
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("sumRegist", sumRegist);
-		map.put("sumSales", sumSales);
-		map.put("sumPayment", sumPayment);
-		map.put("sumEtc", sumEtc);
-		map.put("sumTotal", sumRegist + sumSales + sumPayment + sumEtc);
+		//map.put("sumRegist", sumRegist);
+		map.put("Rlist", Rlist);
+		map.put("Slist", Slist);
+		map.put("Plist", Plist);
+		map.put("Elist", Elist);
+		//map.put("sumTotal", sumRegist + sumSales + sumPayment + sumEtc);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("map", map); // 맵에 저장된 데이터를 mav에 저장
 		mav.setViewName("payment/list"); // 뷰를 list.jsp로 설정
@@ -151,46 +154,27 @@ public class PaymentController {
 	
 	// 07. 수당 지급  목록
 	@RequestMapping(value="listPayment.do", method=RequestMethod.GET)
-    public ModelAndView listPayment(@RequestParam(defaultValue="") String status, HttpSession session){
+    public ModelAndView listPayment(@RequestParam(defaultValue="1") int curPage, @RequestParam(defaultValue="") String status, HttpSession session){
 		ModelAndView mav = new ModelAndView();
 				
 		List<PaymentVO> Plist = null;
 		Map<String, Object> map = new HashMap<String, Object>();
-
-		//System.out.println("### paymentService.paymentList(status) " + paymentService.paymentList(status));
-
-		Plist = paymentService.paymentList(status);
-		//Plist = paymentService.paymentList2(status);
 		
-		//System.out.println("### paymentService.paymentList(status) " + paymentService.paymentList(status));
+		int count = paymentService.countPaymentList(status);
+
+		// 페이지 나누기 관련 처리
+		BoardPager boardPager = new BoardPager(count, curPage);
+		int start = boardPager.getPageBegin();
+		int end = boardPager.getPageEnd();
 		
+		Plist = paymentService.paymentList(start, end, status);
+
 		map.put("list", Plist); // list
-
-		System.out.println("### map " + map);
+		map.put("boardPager", boardPager);
+		map.put("status", status);
 
         mav.addObject("map", map);
         mav.setViewName("payment/listPayment");
-        return mav;
-    }
-	
-	// 07. 수당 지급  목록
-	@RequestMapping(value="listPayment2.do", method=RequestMethod.GET)
-    public ModelAndView listPayment2(@RequestParam(defaultValue="") String status, HttpSession session){
-		ModelAndView mav = new ModelAndView();
-				
-		List<PaymentVO> Plist = null;
-		Map<String, Object> map = new HashMap<String, Object>();
-
-		Plist = paymentService.paymentList2(status);
-		
-		System.out.println("### Plist2 " + Plist);
-		
-		map.put("list", Plist); // list
-
-		System.out.println("### map2 " + map);
-
-        mav.addObject("map", map);
-        mav.setViewName("payment/listPayment2");
         return mav;
     }
 	

@@ -36,24 +36,28 @@ public class PaymentDAOImpl implements PaymentDAO {
 
 	}
 	@Override
-	public int sumRegist(String user_id) {
+//	public int sumRegist(String user_id) {
+//		// TODO Auto-generated method stub
+//		return sqlSession.selectOne("payment.sumRegist", user_id);
+//	}
+	public List<HashMap> sumRegist(String user_id) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("payment.sumRegist", user_id);
+		return sqlSession.selectList("payment.sumRegist", user_id);
 	}
 	@Override
-	public int sumSales(String user_id) {
+	public List<HashMap> sumSales(String user_id) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("payment.sumSales", user_id);
+		return sqlSession.selectList("payment.sumSales", user_id);
 	}
 	@Override
-	public int sumPayment(String user_id) {
+	public List<HashMap> sumPayment(String user_id) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("payment.sumPayment", user_id);
+		return sqlSession.selectList("payment.sumPayment", user_id);
 	}
 	@Override
-	public int sumEtc(String user_id) {
+	public List<HashMap> sumEtc(String user_id) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("payment.sumEtc", user_id);
+		return sqlSession.selectList("payment.sumEtc", user_id);
 	}
 	@Override
 	public List<PaymentVO> selectPayment(String user_id) {
@@ -72,13 +76,14 @@ public class PaymentDAOImpl implements PaymentDAO {
 		}
 	}
 	@Override
-	public List<PaymentVO> paymentList(String strStatus) {
+	public List<PaymentVO> paymentList(int start, int end, String status) {
 		// TODO Auto-generated method stub
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("strStatus", strStatus);
-		System.out.println(" ## sqlSession.selectMap(\"payment.paymentList2\", strStatus) " + sqlSession.selectList("payment.paymentList2", map));
-		//return sqlSession.selectList("payment.paymentList2", map);
-		return sqlSession.selectList("sales.paymentList", map);
+		map.put("start", start);
+		map.put("end", end);
+		map.put("status", status);
+
+		return sqlSession.selectList("payment.paymentList", map);
 	}
 	
 	@Override
@@ -92,12 +97,13 @@ public class PaymentDAOImpl implements PaymentDAO {
 		// TODO Auto-generated method stub
 		sqlSession.update("payment.completeSales", vo);
 	}
+
 	@Override
-	public List<PaymentVO> paymentList2(String strStatus) {
-		// TODO Auto-generated method stub
+	public int countPaymentList(String status) {
 		// TODO Auto-generated method stub
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("strStatus", strStatus);
-		return sqlSession.selectList("payment.paymentList2", map);
+		map.put("status", status);
+		
+		return sqlSession.selectOne("payment.countPaymentList", map);
 	}
 }

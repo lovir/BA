@@ -19,10 +19,10 @@ public class SalesServiceImpl implements SalesService {
 
 		// 01. 리스트 보기
 		@Override
-		public List<SalesVO> list(int start, int end) {
+		public List<SalesVO> list(int start, int end, String status) {
 
 			
-			return salesDao.selectAll(start, end);
+			return salesDao.selectAll(start, end, status);
 
 		}
 		
@@ -65,8 +65,8 @@ public class SalesServiceImpl implements SalesService {
 		}
 
 		@Override
-		public int countSales() {
+		public int countSales(String status) {
 			// TODO Auto-generated method stub
-			return salesDao.countSales();
+			return salesDao.countSales(status);
 		}
 }

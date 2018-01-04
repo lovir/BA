@@ -37,18 +37,19 @@ public class SalesController {
 	
 	// 01. 수당 목록
 	@RequestMapping("list.do")
-    public ModelAndView list(@RequestParam(defaultValue="1") int curPage){
+    public ModelAndView list(@RequestParam(defaultValue="1") int curPage, @RequestParam(defaultValue="") String status){
 		// 레코드의 갯수 계산
-		int count = salesService.countSales();
+		int count = salesService.countSales(status);
 		// 페이지 나누기 관련 처리
 		BoardPager boardPager = new BoardPager(count, curPage);
 		int start = boardPager.getPageBegin();
 		int end = boardPager.getPageEnd();
 		
-		List<SalesVO> list = salesService.list(start, end);
+		List<SalesVO> list = salesService.list(start, end, status);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list); // list
 		map.put("boardPager", boardPager);
+		map.put("status", status);
         ModelAndView mav = new ModelAndView();
         mav.addObject("map", map);
         mav.setViewName("sales/list");

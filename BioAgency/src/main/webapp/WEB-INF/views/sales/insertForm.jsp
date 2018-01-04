@@ -69,13 +69,13 @@ $(document).ready(function(){
 		<div class="col-xs-6">
 		<label for="sel1">상품명 </label>
 		 <select class="form-control" id="pid" name="pid">
-		   <option value="1">가입금</option>
-		   <option value="2">바이오가드</option>
-		   <option value="3">힐링타임</option>
-		   <option value="4">코클링</option>
-		   <option value="5">코로로</option>
-		   <option value="6">기타</option>
-		   <option value="7">인상채득비용</option>
+		   <option value="1">가입금 (3,000,000 원  / 700,000 원)</option>
+		   <option value="2">바이오가드 (1,500,000 원 / 500,000 원)</option>
+		   <option value="3">힐링타임 (198,000 원 / 60,000 원)</option>
+		   <option value="4">코클링 (49,000 원 / 18,000 원)</option>
+		   <option value="5">코로로 (20,000 원 / 10,000 원)</option>
+		   <option value="6">기타 (직접입력)</option>
+		   <option value="7">인상채득비용 ( 0원 / -100,000원)</option>
 		 </select>
 		</div>
 	</div>

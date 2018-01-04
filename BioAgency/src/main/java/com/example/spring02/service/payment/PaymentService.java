@@ -13,14 +13,15 @@ public interface PaymentService {
 	public Object read(int seq);
 	public void delete(int seq);
 	public void update(PaymentVO vo);
-	public int sumRegist(HttpSession session);
-	public int sumSales(HttpSession session);
-	public int sumPayment(HttpSession session);
-	public int sumEtc(HttpSession session);
+	//public int sumRegist(HttpSession session);
+	public List<HashMap> sumRegist(HttpSession session);
+	public List<HashMap> sumSales(HttpSession session);
+	public List<HashMap> sumPayment(HttpSession session);
+	public List<HashMap> sumEtc(HttpSession session);
 	public List<PaymentVO> selectPayment(HttpSession session);
 	public List<SalesVO> selectSales(HttpSession session, int pid);
-	public List<PaymentVO> paymentList(String strStatus);
+	public List<PaymentVO> paymentList(int start, int end, String status);
 	public void completePayment(PaymentVO vo);
 	public void completeSales(PaymentVO vo);
-	public List<PaymentVO> paymentList2(String status);
+	public int countPaymentList(String status);
 }

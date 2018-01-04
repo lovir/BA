@@ -15,6 +15,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			) A
 		) b WHERE rn BETWEEN #{start} AND #{end}
 	</sql>
+	<sql id="searchOption">
+		<choose> 
+			<!-- 검색옵션이 전체 검색일 경우 -->
+			<when test="status == ''">
+				WHERE 
+					1=1
+			</when>
+			<otherwise>
+				WHERE 
+					status = #{status}
+			</otherwise>
+		</choose>
+	</sql>
 	
 	<insert id="insertSales">
         insert into sales (sales_member, pid, purchase_name, purchase_amount, payment_amount, purchase_date, expected_date, upper_member,  status, regdate) values
@@ -85,7 +98,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select 
 	        @ROWNUM := @ROWNUM + 1 AS ROWNUM, s.*, 
 	        (select product_name from product p where s.pid=p.pid) as product_name
-	    from sales s, (SELECT @ROWNUM := 0) R order by s.seq desc
+	    from sales s, (SELECT @ROWNUM := 0) R 
+	    <include refid="searchOption"></include>
+	    order by s.seq desc
         <!-- 페이징 -->
 		<include refid="pagingFooter"></include>	
     </select>
@@ -94,6 +109,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(*) 
 		FROM 
 			sales
+		<include refid="searchOption"></include>	
 	</select>
     <select id="detailView" resultType="com.example.spring02.model.sales.dto.SalesVO">
 		SELECT 
@@ -102,29 +118,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			 (select name from member a where a.userid = s.upper_member) as upper_member_name
 		FROM sales s
 		WHERE s.seq = #{seq} 
-	</select>
-	
-	<select id="paymentList" resultType="com.example.spring02.model.payment.dto.PaymentVO">
-    	<choose>
-			<!-- 검색옵션이 전체 검색일 경우 -->
-			<when test="strStatus == '구매'">
-			select p.amount_date, sum(p.payment_amount) as payment_amount, p.member_id, m.account, m.name as member_name, p.status from
-			(
-			select amount_date, sum(payment_amount) as payment_amount, member_id, status from payment where status in ('구매') group by amount_date, member_id
-			union all
-			select expected_date as amount_date, sum(payment_amount) as payment_amount, sales_member as member_id, status from sales where status in ('구매') group by expected_date, sales_member
-			) p, member m where p.member_id = m.userid group by p.amount_date, p.member_id, m.account, m.name , p.status  
-			</when>
-			<!-- 전체 검색이 아닐 경우 -->
-			<otherwise>
-			select p.amount_date, sum(p.payment_amount) as payment_amount, p.member_id, m.account, m.name as member_name, p.status from
-			(
-			select amount_date, sum(payment_amount) as payment_amount, member_id, status from payment where status in ('구매','지급완료') group by amount_date, member_id
-			union all
-			select expected_date as amount_date, sum(payment_amount) as payment_amount, sales_member as member_id, status from sales where status in ('구매','지급완료') group by expected_date, sales_member
-			) p, member m where p.member_id = m.userid group by p.amount_date, p.member_id, m.account, m.name , p.status 
-			</otherwise>
-		</choose>
 	</select>
 	
 </mapper>

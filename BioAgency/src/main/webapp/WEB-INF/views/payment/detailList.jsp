@@ -144,7 +144,8 @@
 	    	</h1>				
 		</c:otherwise>
     </c:choose>
-</h1>				
+
+<div align="right" ><button type="button" onClick="javascript:history.back(-1);">뒤로 가기</button></div>
 		
 	</div>
     <%@ include file="../include/right.jsp" %>       

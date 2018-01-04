@@ -8,8 +8,14 @@
 <%@ include file="../include/header.jsp" %>
 <script>
 	// 원하는 페이지로 이동시 검색조건, 키워드 값을 유지하기 위해 
-	function list(page){
-		location.href="${path}/sales/list.do?curPage="+page;
+	function list(page, status){
+		location.href="${path}/sales/list.do?curPage="+page+"&status=" + status;
+	}
+	
+	function statusCheck(){
+		//var status = $("#status").value;
+		var status = document.frm1.status.value;
+		location.href="${path}/sales/list.do?status=" + status;
 	}
 </script>
 </head>
@@ -27,7 +33,17 @@
 	<small>매출 관리</small>
 </h1>				
 </p>
-
+<form name="frm1" id="frm1">
+<div align="right" > 현재 상태 : 
+<select id="status" name="status">
+   <option value="">전체</option>	
+   <option value="구매" <c:choose><c:when test="${map.status == '구매'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>구매</option>
+   <option value="환불" <c:choose><c:when test="${map.status == '환불'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>환불</option>
+   <option value="지급완료" <c:choose><c:when test="${map.status == '지급완료'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>지급완료</option>
+</select>
+<button type="button" onClick="javascript:statusCheck();">확인</button>
+</div>
+</form>
 <p>				
 	<table class="table table-striped" >
 		<tr>
@@ -53,15 +69,15 @@
 	    
 		<!-- 페이징 -->
 		<tr>
-			<td colspan="7">
+			<td colspan="5">
 				<!-- 처음페이지로 이동 : 현재 페이지가 1보다 크면  [처음]하이퍼링크를 화면에 출력-->
 				<c:if test="${map.boardPager.curBlock > 1}">
-					<a href="javascript:list('1')">[처음]</a>
+					<a href="javascript:list('1', '${map.status}')">[처음]</a>
 				</c:if>
 				
 				<!-- 이전페이지 블록으로 이동 : 현재 페이지 블럭이 1보다 크면 [이전]하이퍼링크를 화면에 출력 -->
 				<c:if test="${map.boardPager.curBlock > 1}">
-					<a href="javascript:list('${map.boardPager.prevPage}')">[이전]</a>
+					<a href="javascript:list('${map.boardPager.prevPage}', '${map.status}')">[이전]</a>
 				</c:if>
 				
 				<!-- **하나의 블럭 시작페이지부터 끝페이지까지 반복문 실행 -->
@@ -72,19 +88,19 @@
 							<span style="color: red">${num}</span>&nbsp;
 						</c:when>
 						<c:otherwise>
-							<a href="javascript:list('${num}')">${num}</a>&nbsp;
+							<a href="javascript:list('${num}', '${map.status}')">${num}</a>&nbsp;
 						</c:otherwise>
 					</c:choose>
 				</c:forEach>
 				
 				<!-- 다음페이지 블록으로 이동 : 현재 페이지 블럭이 전체 페이지 블럭보다 작거나 같으면 [다음]하이퍼링크를 화면에 출력 -->
 				<c:if test="${map.boardPager.curBlock <= map.boardPager.totBlock}">
-					<a href="javascript:list('${map.boardPager.nextPage}')">[다음]</a>
+					<a href="javascript:list('${map.boardPager.nextPage}', '${map.status}')">[다음]</a>
 				</c:if>
 				
 				<!-- 끝페이지로 이동 : 현재 페이지가 전체 페이지보다 작거나 같으면 [끝]하이퍼링크를 화면에 출력 -->
 				<c:if test="${map.boardPager.curPage <= map.boardPager.totPage}">
-					<a href="javascript:list('${map.boardPager.totPage}')">[끝]</a>
+					<a href="javascript:list('${map.boardPager.totPage}', '${map.status}')">[끝]</a>
 				</c:if>
 			</td>
 		</tr>

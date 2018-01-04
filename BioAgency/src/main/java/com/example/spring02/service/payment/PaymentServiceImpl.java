@@ -44,28 +44,33 @@ public class PaymentServiceImpl implements PaymentService {
 		}
 
 		@Override
-		public int sumRegist(HttpSession session) {
+//		public int sumRegist(HttpSession session) {
+//			// TODO Auto-generated method stub
+//			String userId = session.getAttribute("userId").toString();
+//			return paymentDao.sumRegist(userId);
+//		}
+		public List<HashMap> sumRegist(HttpSession session) {
 			// TODO Auto-generated method stub
 			String userId = session.getAttribute("userId").toString();
 			return paymentDao.sumRegist(userId);
 		}
 
 		@Override
-		public int sumSales(HttpSession session) {
+		public List<HashMap> sumSales(HttpSession session) {
 			// TODO Auto-generated method stub
 			String userId = session.getAttribute("userId").toString();
 			return paymentDao.sumSales(userId);		
 		}
 
 		@Override
-		public int sumPayment(HttpSession session) {
+		public List<HashMap> sumPayment(HttpSession session) {
 			// TODO Auto-generated method stub
 			String userId = session.getAttribute("userId").toString();
 			return paymentDao.sumPayment(userId);		
 		}
 
 		@Override
-		public int sumEtc(HttpSession session) {
+		public List<HashMap> sumEtc(HttpSession session) {
 			// TODO Auto-generated method stub
 			String userId = session.getAttribute("userId").toString();
 			return paymentDao.sumEtc(userId);		
@@ -86,9 +91,9 @@ public class PaymentServiceImpl implements PaymentService {
 		}
 
 		@Override
-		public List<PaymentVO> paymentList(String strStatus) {
+		public List<PaymentVO> paymentList(int start, int end, String status) {
 			// TODO Auto-generated method stub
-			return paymentDao.paymentList(strStatus) ;
+			return paymentDao.paymentList(start, end, status) ;
 		}
 
 		@Override
@@ -104,8 +109,8 @@ public class PaymentServiceImpl implements PaymentService {
 		}
 
 		@Override
-		public List<PaymentVO> paymentList2(String status) {
+		public int countPaymentList(String status) {
 			// TODO Auto-generated method stub
-			return paymentDao.paymentList2(status) ;
+			return paymentDao.countPaymentList(status) ;
 		}
 }

@@ -26,7 +26,16 @@
 <h1>
 	<small>회원 목록</small>	
 </h1>				
-<div align="right" ><button type="button" onClick="location.href='list.do?status=요청&curPage=${map.boardPager.curPage}'">가입 요청 회원만 보기</button> <button type="button" onClick="location.href='org.do'">회원 전체 계보도</button></div>
+
+<c:choose>
+     	<c:when test="${map.status == '요청'}">
+     		<div align="right" ><button type="button" onClick="location.href='list.do'">전체 보기</button>
+     	</c:when>
+	<c:otherwise>
+    	<div align="right" ><button type="button" onClick="location.href='list.do?status=요청&curPage=${map.boardPager.curPage}'">가입 요청 회원만 보기</button> 
+	</c:otherwise>
+</c:choose>
+	<button type="button" onClick="location.href='org.do'">회원 전체 계보도</button></div>
 <p>
 					
 	<table class="table table-striped" >

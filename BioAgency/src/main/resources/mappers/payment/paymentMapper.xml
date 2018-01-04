@@ -5,15 +5,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
 <mapper namespace="payment">
-	
+
 	<!-- 페이징 sql -->
 	<sql id="pagingHeader">
-		SELECT * FROM (
-			SELECT ROW_NUMBER() OVER (ORDER BY seq ASC) AS rn, A.* FROM (
-	</sql>
+		SELECT b.* FROM (
+			select A.ROWNUM rn, A.* FROM (
+	</sql>	
 	<sql id="pagingFooter">
 			) A
-		) WHERE rn BETWEEN #{start} AND #{end}
+		) b WHERE rn BETWEEN #{start} AND #{end}
+	</sql>
+	
+	<sql id="searchOption">
+		<choose> 
+			<!-- 검색옵션이 전체 검색일 경우 -->
+			<when test="status == ''">
+				WHERE 
+					status in ('지급완료','구매')
+			</when>
+			<otherwise>
+				WHERE 
+					status in ('구매')
+			</otherwise>
+		</choose>
 	</sql>
 	
 	<insert id="insertPayment">
@@ -42,33 +56,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM payment
 		WHERE seq = #{seq} 
 	</select>
-	<select id="sumRegist" resultType="int">
+	<!-- <select id="sumRegist" resultType="int">
 		select 
 			IFNULL(sum(s.payment_amount),0) as cnt
 		from sales s 
 		where 
 			s.sales_member = #{userId} and pid = 1
+	</select> -->
+	<select id="sumRegist" resultType="hashmap">
+		select 
+			IFNULL(sum(s.payment_amount),0) as cnt, status
+		from sales s 
+		where 
+			s.sales_member = #{userId} and pid = 1
+			group by status
 	</select>
-	<select id="sumSales" resultType="int">
+	<select id="sumSales" resultType="hashmap">
 		select
-			IFNULL(sum(s.payment_amount),0) as cnt
+			IFNULL(sum(s.payment_amount),0) as cnt, status
 		from sales s 
 		where 
 			s.sales_member = #{userId} and pid in (2,3,4,5)
+		group by status
 	</select>
-	<select id="sumEtc" resultType="int">
+	<select id="sumEtc" resultType="hashmap">
 		select 
-			IFNULL(sum(s.payment_amount),0) as cnt
+			IFNULL(sum(s.payment_amount),0) as cnt, status
 		from sales s 
 		where 
 			s.sales_member = #{userId} and pid in (6, 7)
+		group by status
 	</select>
-	<select id="sumPayment" resultType="int">
+	<select id="sumPayment" resultType="hashmap">
 		select 
-			IFNULL(sum(s.payment_amount),0)
+			IFNULL(sum(s.payment_amount),0) as cnt, status
 		from payment s 
 		where 
 			s.member_id = #{userId}
+		group by status
 	</select>
 	<select id="selectSales1" resultType="com.example.spring02.model.sales.dto.SalesVO">
         select *,(select pr.product_name from product pr where s.pid = pr.pid) as product_name from sales s where sales_member = #{userId} and pid in (1)
@@ -89,9 +114,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 where member_id =  #{userId}
 		 and s.seq = p.sales_seq
     </select>
-    <select id="paymentList" resultType="com.example.spring02.model.payment.dto.PaymentVO">
+    
+    <!-- <select id="paymentList" resultType="com.example.spring02.model.payment.dto.PaymentVO">
     	<choose>
-			<!-- 검색옵션이 전체 검색일 경우 -->
+			검색옵션이 전체 검색일 경우
 			<when test="strStatus == '구매'">
 			select p.amount_date, sum(p.payment_amount) as payment_amount, p.member_id, m.account, m.name as member_name, p.status from
 			(
@@ -100,7 +126,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			select expected_date as amount_date, sum(payment_amount) as payment_amount, sales_member as member_id, status from sales where status in ('구매') group by expected_date, sales_member
 			) p, member m where p.member_id = m.userid group by p.amount_date, p.member_id, m.account, m.name , p.status  
 			</when>
-			<!-- 전체 검색이 아닐 경우 -->
+			전체 검색이 아닐 경우
 			<otherwise>
 			select p.amount_date, sum(p.payment_amount) as payment_amount, p.member_id, m.account, m.name as member_name, p.status from
 			(
@@ -110,9 +136,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			) p, member m where p.member_id = m.userid group by p.amount_date, p.member_id, m.account, m.name , p.status 
 			</otherwise>
 		</choose>
-	</select>
-	<select id="paymentList2" resultType="com.example.spring02.model.payment.dto.PaymentVO">
-    	select amount_date, sum(payment_amount) as payment_amount, member_id, status from payment where status in ('구매','지급완료') group by amount_date, member_id		
+	</select> -->
+	
+    <select id="paymentList" resultType="com.example.spring02.model.payment.dto.PaymentVO">
+    	 <!-- 페이징 -->
+    	 <include refid="pagingHeader"></include>
+    	 select 
+    	  	@ROWNUM := @ROWNUM + 1 AS ROWNUM, 
+    	 	vw.*
+		 from vw_paymentList vw, (SELECT @ROWNUM := 0) R
+		 <include refid="searchOption"></include>
+        <!-- 페이징 -->
+		<include refid="pagingFooter"></include>	
+    </select>
+    
+    <!-- 02_02. 레코드 갯수 -->
+	<select id="countPaymentList" resultType="int">
+		SELECT COUNT(*) 
+		FROM
+			vw_paymentList vw
+		<include refid="searchOption"></include>
 	</select>
 	
 	<update id="completePayment" >

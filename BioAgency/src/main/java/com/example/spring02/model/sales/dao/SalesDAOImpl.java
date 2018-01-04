@@ -21,11 +21,12 @@ public class SalesDAOImpl implements SalesDAO {
 	public void insertSales(SalesVO vo) {
 		sqlSession.insert("sales.insertSales", vo);
 	}
-	public List<SalesVO> selectAll(int start, int end) {
+	public List<SalesVO> selectAll(int start, int end, String status) {
 		// 검색옵션, 키워드 맵에 저장
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("start", start);
 		map.put("end", end);
+		map.put("status", status);
 		return sqlSession.selectList("sales.selectAll", map); 
 	}
 	public SalesVO detailView(int seq) {
@@ -68,8 +69,10 @@ public class SalesDAOImpl implements SalesDAO {
 		sqlSession.update("sales.updatePaymentEtc", vo);
 	}
 	@Override
-	public int countSales() {
+	public int countSales(String status) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("sales.countSales");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("status", status);
+		return sqlSession.selectOne("sales.countSales", map);
 	}
 }

@@ -84,13 +84,13 @@ $(document).ready(function(){
 		<div class="col-xs-6">
 		<label for="sel1">상품명 </label>
 		 <select class="form-control" id="pid" name="pid">
-		   <option value="1" <c:choose><c:when test="${dto.pid == '1'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>가입금</option>
-		   <option value="2" <c:choose><c:when test="${dto.pid == '2'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>바이오가드</option>
-		   <option value="3" <c:choose><c:when test="${dto.pid == '3'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>힐링타임</option>
-		   <option value="4" <c:choose><c:when test="${dto.pid == '4'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>코클링</option>
-		   <option value="5" <c:choose><c:when test="${dto.pid == '5'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>코로로</option>
-		   <option value="6" <c:choose><c:when test="${dto.pid == '6'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>기타</option>
-		   <option value="7" <c:choose><c:when test="${dto.pid == '7'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>인상채득비용</option>	
+		   <option value="1" <c:choose><c:when test="${dto.pid == '1'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>가입금 (3,000,000 원  / 700,000 원)</option>
+		   <option value="2" <c:choose><c:when test="${dto.pid == '2'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>바이오가드 (1,500,000 원 / 500,000 원)</option>
+		   <option value="3" <c:choose><c:when test="${dto.pid == '3'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>힐링타임 (198,000 원 / 60,000 원)</option>
+		   <option value="4" <c:choose><c:when test="${dto.pid == '4'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>코클링 (49,000 원 / 18,000 원)</option>
+		   <option value="5" <c:choose><c:when test="${dto.pid == '5'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>코로로 (20,000 원 / 10,000 원)</option>
+		   <option value="6" <c:choose><c:when test="${dto.pid == '6'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>기타 (직접입력)</option>
+		   <option value="7" <c:choose><c:when test="${dto.pid == '7'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>인상채득비용 ( 0원 / -100,000원)</option>	
 		 </select>
 		</div>
 	</div>
@@ -142,7 +142,7 @@ $(document).ready(function(){
 		 <select class="form-control" id="status" name="status">
 		   <option value="구매" <c:choose><c:when test="${dto.status == '구매'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>구매</option>
 		   <option value="환불" <c:choose><c:when test="${dto.status == '환불'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>환불</option>
-		   <option value="수당지급" <c:choose><c:when test="${dto.status == '수당지급'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>수당지급</option>
+		   <option value="지급완료" <c:choose><c:when test="${dto.status == '지급완료'}">selected</c:when><c:otherwise></c:otherwise></c:choose>>지급완료</option>
 		 </select>
 		</div>
 	</div>	
