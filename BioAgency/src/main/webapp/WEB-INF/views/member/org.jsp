@@ -34,7 +34,18 @@
         var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
         // Draw the chart, setting the allowHtml option to true for the tooltips.
         chart.draw(data, {allowHtml:true});
+        
+     // When the orgchart is selected, update the table chart.
+        google.visualization.events.addListener(chart, 'select', function() {
+          var item = data.getValue(chart.getSelection()[0].row, 0);
+          var id = item.split('(')[1].replace(')', '');
+          
+          //alert(id);
+          location.href = '/BioAgency/member/detail.do?userid=' + id;
+        });
       }
+      
+   
    </script>
 </head>
 
