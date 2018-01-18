@@ -39,3 +39,28 @@ select amount_date, sum(payment_amount) as payment_amount, member_id from paymen
 union all
 select expected_date as amount_date, sum(payment_amount) as payment_amount, sales_member as member_id from sales where status in ('구매') group by expected_date, sales_member
 ) p, member m where p.member_id = m.userid group by p.amount_date, p.member_id, m.account
+
+
+SELECT DATE_FORMAT(DATE_SUB(`amount_date`, INTERVAL (DAYOFWEEK(`amount_date`)-1) DAY), '%Y/%m/%d') as start,
+       DATE_FORMAT(DATE_SUB(`amount_date`, INTERVAL (DAYOFWEEK(`amount_date`)-7) DAY), '%Y/%m/%d') as end,
+       DATE_FORMAT(`amount_date`, '%Y%U') AS `date`, status,
+       sum(`payment_amount`) as payment_amount
+  FROM payment
+GROUP BY date, status;
+
+SELECT DATE_FORMAT(DATE_SUB(`purchase_date`, INTERVAL (DAYOFWEEK(`purchase_date`)-1) DAY), '%Y/%m/%d') as start,
+       DATE_FORMAT(DATE_SUB(`purchase_date`, INTERVAL (DAYOFWEEK(`purchase_date`)-7) DAY), '%Y/%m/%d') as end,
+       DATE_FORMAT(`purchase_date`, '%Y%U') AS `date`, status,
+       sum(`purchase_amount`) as purchase_amount
+  FROM sales
+GROUP BY date, status; 
+ 
+SELECT DATE_FORMAT(`amount_date`, '%Y/%m') AS `date`, status,
+       sum(`payment_amount`) as payment_amount
+ FROM payment
+GROUP BY `date` , status;
+
+SELECT DATE_FORMAT(`purchase_date`, '%Y/%m') AS `date`, status,
+       sum(`purchase_amount`) as purchase_amount
+ FROM sales
+GROUP BY `date` , status;
